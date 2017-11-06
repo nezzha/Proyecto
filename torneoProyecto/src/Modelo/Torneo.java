@@ -57,4 +57,11 @@ public class Torneo {
     public void setCampeonTorneo(String campeonTorneo) {
         this.campeonTorneo = campeonTorneo;
     }
+
+    @Override
+    public String toString() {
+        return  nombreTorneo ;
+    }
+    
+    
 }
