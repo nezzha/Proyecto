@@ -107,7 +107,7 @@ public class RegistrarArbitro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        MenuPrincipalAdmin menu = new MenuPrincipalAdmin();
+        MenuArbitro menu = new MenuArbitro();
         menu.setVisible(true);
         this.setVisible(false);
         // TODO add your handling code here:

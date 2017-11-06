@@ -99,7 +99,7 @@ public class MenuArbitro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         Arbitro arbitro = new Arbitro();
+        Arbitro arbitro = new Arbitro();
         consultaArbitro consul  = new consultaArbitro();
         RegistrarArbitro frm= new RegistrarArbitro();
         ctrlArbitroAlta ctrl = new ctrlArbitroAlta(arbitro, consul, frm);
@@ -111,7 +111,9 @@ public class MenuArbitro extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         EliminarArbitro eliminar =new EliminarArbitro();
+        
         eliminar.setVisible(true);
+        eliminar.setLocationRelativeTo(null);
         this.setVisible(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed

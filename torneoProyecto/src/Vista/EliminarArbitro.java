@@ -98,9 +98,19 @@ public class EliminarArbitro extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Eliminar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -154,6 +164,45 @@ public class EliminarArbitro extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        if(evt.getButton()== 1){
+            int fila= jTable1.getSelectedRow();
+            try {
+                 Deshabilitar();
+                Conexion conn= new Conexion();
+                Connection con = conn.getConexion();
+                String sql="SELECT * FROM arbitro WHERE idArbitro="+ jTable1.getValueAt(fila, 0);
+                Statement ps= con.createStatement();
+                ResultSet rs = ps.executeQuery(sql);
+                rs.next();
+                   txtNombre.setText(rs.getString("nombreArbitro"));
+                   txtApellidos.setText(rs.getString("apellidoArbitro"));
+                  
+            } catch (Exception e) {
+            }
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            int fila= jTable1.getSelectedRow();
+            Conexion conn= new Conexion();
+            Connection con = conn.getConexion();
+            String sql="DELETE FROM arbitro WHERE idArbitro="+ jTable1.getValueAt(fila, 0);
+            Statement ps= con.createStatement();
+            int n = ps.executeUpdate(sql);
+            if(n>0){
+                llenar();
+                JOptionPane.showMessageDialog(null,"Arbitro eliminado");
+            } 
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error al eliminar arbitro");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
