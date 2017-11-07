@@ -40,7 +40,7 @@ public class EliminarArbitro extends javax.swing.JFrame {
             Connection con = conn.getConexion();
            
             String[] titulos={"idArbitro","nombreArbitro","apellidoArbitro"};
-            String sql ="SELECT * FROM arbitro";
+            String sql ="SELECT * FROM Arbitro";
             modelo = new DefaultTableModel(null,titulos);
             Statement ps= con.createStatement();
             ResultSet rs = ps.executeQuery(sql);
@@ -172,7 +172,7 @@ public class EliminarArbitro extends javax.swing.JFrame {
                  Deshabilitar();
                 Conexion conn= new Conexion();
                 Connection con = conn.getConexion();
-                String sql="SELECT * FROM arbitro WHERE idArbitro="+ jTable1.getValueAt(fila, 0);
+                String sql="SELECT * FROM Arbitro WHERE idArbitro="+ jTable1.getValueAt(fila, 0);
                 Statement ps= con.createStatement();
                 ResultSet rs = ps.executeQuery(sql);
                 rs.next();
@@ -190,7 +190,7 @@ public class EliminarArbitro extends javax.swing.JFrame {
             int fila= jTable1.getSelectedRow();
             Conexion conn= new Conexion();
             Connection con = conn.getConexion();
-            String sql="DELETE FROM arbitro WHERE idArbitro="+ jTable1.getValueAt(fila, 0);
+            String sql="DELETE FROM Arbitro WHERE idArbitro="+ jTable1.getValueAt(fila, 0);
             Statement ps= con.createStatement();
             int n = ps.executeUpdate(sql);
             if(n>0){
