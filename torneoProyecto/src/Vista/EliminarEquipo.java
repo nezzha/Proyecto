@@ -4,51 +4,53 @@
  * and open the template in the editor.
  */
 package Vista;
-import javax.swing.table.DefaultTableModel;
+
 import Modelo.Conexion;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Vanessa
  */
-public class EliminarArbitro extends javax.swing.JFrame {
+public class EliminarEquipo extends javax.swing.JFrame {
     DefaultTableModel modelo;
-    
     /**
-     * Creates new form EliminarArbitro
+     * Creates new form EliminarEquipo
      */
-    public EliminarArbitro() {
+    public EliminarEquipo() {
         initComponents();
-       
         llenarFiltro("");
+    }
+    public void Deshabilitar(){
+        txtNombreEq.setEditable(false);
+        
     }
     
     public void limpiar(){
-        txtApellidos.setText("");
-        txtNombre.setText("");
+    txtNombreEq.setText("");
+    txtTorneo.setText("");
     }
     
-    public void Deshabilitar(){
-        txtApellidos.setEditable(false);
-        txtNombre.setEditable(false);
-    }
-    
-    public void llenarFiltro(String filtro){
+    public void llenar(){
         try {
             Conexion conn= new Conexion();
             Connection con = conn.getConexion();
            
-            String[] titulos={"idArbitro","nombreArbitro","apellidoArbitro"};
-            String sql ="SELECT * FROM Arbitro WHERE nombreArbitro LIKE '%"+ filtro + "%'";
+            String[] titulos={"Id Equipo","Nombre Equipo","Nombre Torneo"};
+            //String sql ="SELECT e.idEquipo, e.nombreEquipo, t.idTorneo, t.nombreTorneo FROM Equipo e, Torneo t WHERE  t.idTorneo = e.TorneoIdTorneo ";
+            String sql ="SELECT e.idEquipo, e.nombreEquipo, t.nombreTorneo FROM Equipo e INNER JOIN Torneo t ON t.idTorneo = e.Torneo_IdTorneo ";
             modelo = new DefaultTableModel(null,titulos);
             Statement ps= con.createStatement();
             ResultSet rs = ps.executeQuery(sql);
             String[] fila =  new String[3];
             while(rs.next()){
-                fila[0]=rs.getString("idArbitro");
-                fila[1]=rs.getString("nombreArbitro");
-                fila[2]=rs.getString("apellidoArbitro");
+                fila[0]=rs.getString("idEquipo");
+                fila[1]=rs.getString("nombreEquipo");
+                fila[2]=rs.getString("nombreTorneo");
                 
                 modelo.addRow(fila);
             }
@@ -59,21 +61,22 @@ public class EliminarArbitro extends javax.swing.JFrame {
     
     }
     
-     public void llenar(){
+     public void llenarFiltro(String filtro){
         try {
             Conexion conn= new Conexion();
             Connection con = conn.getConexion();
            
-            String[] titulos={"idArbitro","nombreArbitro","apellidoArbitro"};
-            String sql ="SELECT * FROM Arbitro";
+            String[] titulos={"Id Equipo","Nombre Equipo","Nombre Torneo"};
+            //String sql ="SELECT e.idEquipo, e.nombreEquipo, t.idTorneo, t.nombreTorneo FROM Equipo e, Torneo t WHERE  t.idTorneo = e.TorneoIdTorneo ";
+            String sql ="SELECT e.idEquipo, e.nombreEquipo, t.nombreTorneo FROM Equipo e, Torneo t WHERE t.idTorneo = e.Torneo_IdTorneo AND nombreEquipo LIKE '%"+ filtro + "%'";            
             modelo = new DefaultTableModel(null,titulos);
             Statement ps= con.createStatement();
             ResultSet rs = ps.executeQuery(sql);
             String[] fila =  new String[3];
             while(rs.next()){
-                fila[0]=rs.getString("idArbitro");
-                fila[1]=rs.getString("nombreArbitro");
-                fila[2]=rs.getString("apellidoArbitro");
+                fila[0]=rs.getString("idEquipo");
+                fila[1]=rs.getString("nombreEquipo");
+                fila[2]=rs.getString("nombreTorneo");
                 
                 modelo.addRow(fila);
             }
@@ -83,6 +86,7 @@ public class EliminarArbitro extends javax.swing.JFrame {
         }
     
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -92,28 +96,24 @@ public class EliminarArbitro extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
-        txtApellidos = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        txtNombreEq = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
+        txtTorneo = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        btnRegresar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         txtBusqueda = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel2.setText("Nombre:");
-        jLabel2.setToolTipText("");
+        jLabel1.setText("EQUIPO");
 
-        jLabel3.setText("Apellidos:");
-
-        txtApellidos.setToolTipText("");
-
-        jLabel1.setText("ELIMINAR ARBITRO");
+        jLabel2.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
+        jLabel2.setText("Nombre del Equipo:");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -133,14 +133,21 @@ public class EliminarArbitro extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Eliminar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jLabel3.setText("Nombe del Torneo");
+
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnRegresarActionPerformed(evt);
             }
         });
 
-        jLabel4.setText("Buscar:");
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -148,89 +155,93 @@ public class EliminarArbitro extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Regresar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
+        jLabel4.setText("Buscar:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(190, 190, 190))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(75, 75, 75))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
                                     .addComponent(jLabel2)
-                                    .addComponent(jLabel4))
-                                .addGap(43, 43, 43)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtApellidos)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
-                                    .addComponent(txtBusqueda))
+                                    .addComponent(jLabel3))
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton1))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(147, 147, 147)
-                        .addComponent(jLabel1)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtNombreEq, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                    .addComponent(txtTorneo))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                                .addComponent(btnEliminar)))))
+                .addGap(27, 27, 27))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jLabel1)
-                        .addGap(29, 29, 29)
+                        .addGap(50, 50, 50)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(84, 84, 84)
-                        .addComponent(jButton1)
-                        .addGap(5, 5, 5)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(txtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                            .addComponent(txtNombreEq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addComponent(btnEliminar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTorneo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
-                .addComponent(jButton2)
-                .addGap(4, 4, 4))
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addComponent(btnRegresar)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        
         if(evt.getButton()== 1){
             int fila= jTable1.getSelectedRow();
             try {
                  Deshabilitar();
                 Conexion conn= new Conexion();
                 Connection con = conn.getConexion();
-                String sql="SELECT * FROM Arbitro WHERE idArbitro="+ jTable1.getValueAt(fila, 0);
+                String sql="SELECT e.idEquipo, e.nombreEquipo, t.nombreTorneo FROM Equipo e, Torneo t WHERE  t.idTorneo = e.Torneo_IdTorneo AND idEquipo="+ jTable1.getValueAt(fila, 0);
                 Statement ps= con.createStatement();
                 ResultSet rs = ps.executeQuery(sql);
                 rs.next();
-                   txtNombre.setText(rs.getString("nombreArbitro"));
-                   txtApellidos.setText(rs.getString("apellidoArbitro"));
+                   txtNombreEq.setText(rs.getString("nombreEquipo"));
+                   txtTorneo.setText(rs.getString("nombreTorneo"));
+                  
                   
             } catch (Exception e) {
             }
@@ -238,36 +249,40 @@ public class EliminarArbitro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTable1MouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        
         try {
             int fila= jTable1.getSelectedRow();
             Conexion conn= new Conexion();
             Connection con = conn.getConexion();
-            String sql="DELETE FROM Arbitro WHERE idArbitro="+ jTable1.getValueAt(fila, 0);
+            String sql="DELETE FROM Equipo WHERE idEquipo="+ jTable1.getValueAt(fila, 0);
             Statement ps= con.createStatement();
             int n = ps.executeUpdate(sql);
             if(n>0){
                 llenar();
-                JOptionPane.showMessageDialog(null,"Arbitro eliminado");
+                JOptionPane.showMessageDialog(null,"Usuario eliminado");
+                limpiar();
             } 
             
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Error al eliminar arbitro");
+            JOptionPane.showMessageDialog(null,"Error al eliminar usuario");
+            limpiar();
         }
+
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        MenuEquipo equipo = new MenuEquipo();
+        equipo.setVisible(true);
+        this.setVisible(false);
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
         llenarFiltro(txtBusqueda.getText());
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBusquedaKeyReleased
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        MenuArbitro arbitro = new MenuArbitro();
-        arbitro.setVisible(true);
-        this.setVisible(false);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -286,35 +301,35 @@ public class EliminarArbitro extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EliminarArbitro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EliminarEquipo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EliminarArbitro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EliminarEquipo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EliminarArbitro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EliminarEquipo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EliminarArbitro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EliminarEquipo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EliminarArbitro().setVisible(true);
+                new EliminarEquipo().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    public javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtBusqueda;
-    public javax.swing.JTextField txtNombre;
+    public javax.swing.JTextField txtNombreEq;
+    private javax.swing.JTextField txtTorneo;
     // End of variables declaration//GEN-END:variables
 }

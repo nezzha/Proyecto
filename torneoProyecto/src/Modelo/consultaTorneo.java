@@ -20,7 +20,7 @@ public class consultaTorneo extends Conexion{
     
         PreparedStatement ps= null;
         Connection con = getConexion();
-        String sql ="INSERT INTO torneo (nombreTorneo) VALUES(?)";  
+        String sql ="INSERT INTO Torneo (nombreTorneo) VALUES(?)";  
         
         try{
         

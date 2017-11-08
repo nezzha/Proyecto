@@ -53,6 +53,11 @@ public class RegistrarEquipo extends javax.swing.JFrame {
             }
        
     }
+    
+    public void limpiar(){
+    txtNombreEq.setText("");
+    
+    }
   /*  public ArrayList<String> llenarCombo(){
         ArrayList<String> lista = new ArrayList<String>();
         String sql ="SELECT * FROM Torneo";   
@@ -196,6 +201,7 @@ public class RegistrarEquipo extends javax.swing.JFrame {
          if(n>0){
          
              JOptionPane.showMessageDialog(null, "Datos guardados");
+             
          }
           
         }catch(SQLException e){
