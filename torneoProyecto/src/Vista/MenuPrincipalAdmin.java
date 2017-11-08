@@ -181,6 +181,9 @@ public class MenuPrincipalAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTorneoActionPerformed
 
     private void btnPartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPartidoActionPerformed
+        MenuPartido partido = new MenuPartido();
+        partido.setVisible(true);
+        this.setVisible(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPartidoActionPerformed
 

@@ -5,23 +5,16 @@
  */
 package Vista;
 
-import Controlador.ctrlArbitroAlta;
-import Controlador.ctrlTorneoAlta;
-import Modelo.Arbitro;
-import Modelo.Torneo;
-import Modelo.consultaArbitro;
-import Modelo.consultaTorneo;
-
 /**
  *
  * @author Vanessa
  */
-public class MenuArbitro extends javax.swing.JFrame {
+public class MenuPartido extends javax.swing.JFrame {
 
     /**
-     * Creates new form MenuArbitro
+     * Creates new form MenuPartido
      */
-    public MenuArbitro() {
+    public MenuPartido() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -42,21 +35,11 @@ public class MenuArbitro extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("MENU ARBITRO");
+        jLabel1.setText("MENÚ DE PARTIDOS");
 
-        jButton1.setText("Registro de Arbitro");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        jButton1.setText("Programar Partido");
 
-        jButton2.setText("Eliminar Arbitro");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
+        jButton2.setText("Registrar Resultados");
 
         jButton3.setText("Regresar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -69,65 +52,44 @@ public class MenuArbitro extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(58, 58, 58))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(164, 164, 164)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(160, 160, 160)
-                        .addComponent(jLabel1))
+                        .addGap(61, 61, 61)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(109, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(71, 71, 71))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(21, 21, 21)
                 .addComponent(jLabel1)
-                .addGap(38, 38, 38)
-                .addComponent(jButton1)
-                .addGap(14, 14, 14)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGap(63, 63, 63)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addComponent(jButton3)
-                .addGap(22, 22, 22))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Arbitro arbitro = new Arbitro();
-        consultaArbitro consul  = new consultaArbitro();
-        RegistrarArbitro frm= new RegistrarArbitro();
-        ctrlArbitroAlta ctrl = new ctrlArbitroAlta(arbitro, consul, frm);
-        ctrl.iniciarAlta();
-        frm.setVisible(true);
-        this.setVisible(false);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        EliminarArbitro eliminar =new EliminarArbitro();
-        
-        eliminar.setVisible(true);
-        eliminar.setLocationRelativeTo(null);
-        this.setVisible(false);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         MenuPrincipalAdmin menu = new MenuPrincipalAdmin();
         menu.setVisible(true);
         this.setVisible(false);
-            // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
@@ -147,20 +109,20 @@ public class MenuArbitro extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuArbitro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuPartido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuArbitro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuPartido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuArbitro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuPartido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuArbitro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MenuPartido.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuArbitro().setVisible(true);
+                new MenuPartido().setVisible(true);
             }
         });
     }
