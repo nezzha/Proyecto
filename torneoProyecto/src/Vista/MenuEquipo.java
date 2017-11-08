@@ -23,6 +23,7 @@ public class MenuEquipo extends javax.swing.JFrame {
      */
     public MenuEquipo() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -124,6 +125,7 @@ public class MenuEquipo extends javax.swing.JFrame {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         EliminarEquipo eliminar = new EliminarEquipo();
         eliminar.setVisible(true);
+        eliminar.setLocationRelativeTo(null);
         this.setVisible(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarActionPerformed
@@ -140,6 +142,7 @@ public class MenuEquipo extends javax.swing.JFrame {
         try {
             RegistrarEquipo equipo = new RegistrarEquipo();
             equipo.setVisible(true);
+            equipo.setLocationRelativeTo(null);
             this.setVisible(false);
             // TODO add your handling code here:
         } catch (SQLException ex) {
