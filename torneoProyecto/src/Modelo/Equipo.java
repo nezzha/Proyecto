@@ -141,4 +141,9 @@ public class Equipo {
         this.torneoIdTorneo = torneoIdTorneo;
     }
 
+    @Override
+    public String toString() {
+        return nombreEquipo;
+    }
+
 }

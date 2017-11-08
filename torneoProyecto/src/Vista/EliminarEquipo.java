@@ -23,6 +23,7 @@ public class EliminarEquipo extends javax.swing.JFrame {
      */
     public EliminarEquipo() {
         initComponents();
+        
         llenarFiltro("");
     }
     public void Deshabilitar(){
