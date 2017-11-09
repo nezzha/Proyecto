@@ -44,5 +44,10 @@ public class Arbitro {
         this.apellidoArbitro = apellidoArbitro;
     }
 
+    @Override
+    public String toString() {
+        return  nombreArbitro ;
+    }
+
 
 }
