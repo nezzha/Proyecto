@@ -20,7 +20,7 @@ public class EliminarArbitro extends javax.swing.JFrame {
      */
     public EliminarArbitro() {
         initComponents();
-       
+        //jTable1.setEnabled(false);
         llenarFiltro("");
     }
     
