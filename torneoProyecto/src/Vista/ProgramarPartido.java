@@ -75,32 +75,7 @@ public class ProgramarPartido extends javax.swing.JFrame {
             }
        
     }
-     
-     public void llenar(){
-        try {
-            Conexion conn= new Conexion();
-            Connection con = conn.getConexion();
-           
-            String[] titulos={"Id Equipo","Nombre Equipo","Nombre Torneo"};
-            //String sql ="SELECT e.idEquipo, e.nombreEquipo, t.idTorneo, t.nombreTorneo FROM Equipo e, Torneo t WHERE  t.idTorneo = e.TorneoIdTorneo ";
-            String sql ="SELECT e.idEquipo, e.nombreEquipo, t.nombreTorneo FROM Equipo e INNER JOIN Torneo t ON t.idTorneo = e.Torneo_IdTorneo ";
-            modelo = new DefaultTableModel(null,titulos);
-            Statement ps= con.createStatement();
-            ResultSet rs = ps.executeQuery(sql);
-            String[] fila =  new String[3];
-            while(rs.next()){
-                fila[0]=rs.getString("idEquipo");
-                fila[1]=rs.getString("nombreEquipo");
-                fila[2]=rs.getString("nombreTorneo");
-                
-                modelo.addRow(fila);
-            }
-            jTable1.setModel(modelo);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     
-    }
      
      public void Equipo() throws SQLException{
     
