@@ -168,6 +168,11 @@ public class ProgramarPartido extends javax.swing.JFrame {
         jLabel8.setText("Arbitro:");
 
         jButton2.setText("Regresar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -264,39 +269,56 @@ public class ProgramarPartido extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         Conexion conn= new Conexion();
-        Connection con = conn.getConexion();
-        Date fecha= new Date();
-        fecha=jdFecha.getDate();
+        int e1=cmbEquipoUno.getItemAt(cmbEquipoUno.getSelectedIndex()).getIdEquipo();
+        int e2=cmbEquipoDos.getItemAt(cmbEquipoDos.getSelectedIndex()).getIdEquipo();
+        if(e1 != e2 ){
         
-        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-       
-        int id= cmbTorneo.getItemAt(cmbTorneo.getSelectedIndex()).getIdTorneo();
-        System.out.println(id);
-        try{
-            String sql ="INSERT INTO Partido (fechaPartido,horaPartido,Equipo_idEquipo1,Equipo_idEquipo2,Arbitro_idArbitro) VALUES(?,?,?,?,?)";  
-            PreparedStatement ps= con.prepareCall(sql);
-            ps.setDate(1, new java.sql.Date(fecha.getTime()));
-            ps.setString(2, txtHora.getText());
-            ps.setInt(3, cmbEquipoUno.getItemAt(cmbEquipoUno.getSelectedIndex()).getIdEquipo());
-            ps.setInt(4, cmbEquipoDos.getItemAt(cmbEquipoDos.getSelectedIndex()).getIdEquipo());  
-            ps.setInt(5, cmArbitro.getItemAt(cmbTorneo.getSelectedIndex()).getIdArbitro());
-     
-         int n = ps.executeUpdate();
-         if(n>0){
-         
-             JOptionPane.showMessageDialog(null, "Datos guardados");
-             
-         }
-          
-        }catch(SQLException e){
-            System.err.println(e);
-          
+            Conexion conn= new Conexion();
+            Connection con = conn.getConexion();
+            Date fecha= new Date();
+            fecha=jdFecha.getDate();
+
+            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+
+            int id= cmbTorneo.getItemAt(cmbTorneo.getSelectedIndex()).getIdTorneo();
+            System.out.println(id);
+            try{
+                String sql ="INSERT INTO Partido (fechaPartido,horaPartido,Equipo_idEquipo1,Equipo_idEquipo2,Arbitro_idArbitro) VALUES(?,?,?,?,?)";  
+                PreparedStatement ps= con.prepareCall(sql);
+                ps.setDate(1, new java.sql.Date(fecha.getTime()));
+                ps.setString(2, txtHora.getText());
+                ps.setInt(3, cmbEquipoUno.getItemAt(cmbEquipoUno.getSelectedIndex()).getIdEquipo());
+                ps.setInt(4, cmbEquipoDos.getItemAt(cmbEquipoDos.getSelectedIndex()).getIdEquipo());  
+                ps.setInt(5, cmArbitro.getItemAt(cmbTorneo.getSelectedIndex()).getIdArbitro());
+
+             int n = ps.executeUpdate();
+             if(n>0){
+
+                 JOptionPane.showMessageDialog(null, "Datos guardados");
+
+             }
+
+            }catch(SQLException e){
+                System.err.println(e);
+
+
+            }
         
+        }else{
+            JOptionPane.showMessageDialog(null, "Ingrese Equipos diferentes");
+            
+            
         }
+        
+        
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        MenuPartido menu = new MenuPartido();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
