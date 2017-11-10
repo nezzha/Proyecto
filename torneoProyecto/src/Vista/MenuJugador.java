@@ -49,6 +49,11 @@ public class MenuJugador extends javax.swing.JFrame {
         });
 
         btnModificarJug.setText("Modificar Jugador");
+        btnModificarJug.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarJugActionPerformed(evt);
+            }
+        });
 
         btnEliminarJug.setText("Eliminar Jugador");
         btnEliminarJug.addActionListener(new java.awt.event.ActionListener() {
@@ -131,6 +136,14 @@ public class MenuJugador extends javax.swing.JFrame {
             Logger.getLogger(MenuJugador.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAltaJugadorActionPerformed
+
+    private void btnModificarJugActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarJugActionPerformed
+        ModificarJugador jugador = new ModificarJugador();
+        jugador.setVisible(true);
+        this.setVisible(false);
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnModificarJugActionPerformed
 
     /**
      * @param args the command line arguments

@@ -6,9 +6,13 @@
 package Vista;
 
 import Modelo.Conexion;
+import Modelo.Torneo;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,6 +27,7 @@ public class ModificarEquipo extends javax.swing.JFrame {
     public ModificarEquipo() {
         initComponents();
         llenarFiltro("");
+        //txtId.setVisible(false);
     }
     
     public void llenarFiltro(String filtro){
@@ -50,6 +55,31 @@ public class ModificarEquipo extends javax.swing.JFrame {
         }
     
     }
+    
+    public void torneo() throws SQLException{
+    
+        Conexion conn= new Conexion();
+        Connection con = conn.getConexion();
+        
+        String sql ="SELECT * FROM Torneo WHERE estadoTorneo=1";   
+        PreparedStatement pst = con.prepareStatement(sql);
+        ResultSet rs = pst.executeQuery();
+        
+         while(rs.next()){
+                Torneo torneo = new Torneo();
+                torneo.setNombreTorneo(rs.getString("nombreTorneo"));
+                torneo.setIdTorneo(rs.getInt("idTorneo"));
+                cmbTorneo.addItem(torneo);
+            }
+       
+    }
+    
+    public void limpiar(){
+        txtNombreEq.setText("");
+        txtId.setText("");
+        txtBusqueda.setText("");
+        cmbTorneo.addItem(null);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -70,7 +100,8 @@ public class ModificarEquipo extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         txtBusqueda = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        txtId = new javax.swing.JTextField();
+        cmbTorneo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,7 +121,7 @@ public class ModificarEquipo extends javax.swing.JFrame {
         });
 
         btnAceptar.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
-        btnAceptar.setText("Registrar");
+        btnAceptar.setText("Modificar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAceptarActionPerformed(evt);
@@ -108,6 +139,11 @@ public class ModificarEquipo extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jLabel4.setText("Busqueda");
@@ -123,63 +159,65 @@ public class ModificarEquipo extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNombreEq, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbTorneo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel1)
+                                .addGap(128, 128, 128)))
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnRegresar)
-                                .addGap(254, 254, 254)
+                                .addGap(267, 267, 267)
                                 .addComponent(btnAceptar))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(65, 65, 65)
-                                        .addComponent(jLabel1))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtNombreEq, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(34, 34, 34)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(122, 122, 122)))
-                        .addGap(0, 13, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap())
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 28, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtNombreEq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                    .addComponent(cmbTorneo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAceptar))
-                .addGap(26, 26, 26))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAceptar)
+                    .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -194,7 +232,30 @@ public class ModificarEquipo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-
+        
+        try {
+            
+            Conexion conn= new Conexion();
+            Connection con = conn.getConexion();
+            String sql ="UPDATE Equipo SET nombreEquipo=?, Torneo_idTorneo=? WHERE idEquipo=?";  
+            PreparedStatement ps= con.prepareStatement(sql);
+            ps.setString(1, txtNombreEq.getText());
+            ps.setInt(2,cmbTorneo.getItemAt(cmbTorneo.getSelectedIndex()).getIdTorneo());
+            ps.setInt(3, Integer.parseInt(txtId.getText()));
+            //System.out.print("estado "+bvar2+"  Campeon "+txtCampeon.getText()+ " " +txtId.getText());
+            int n= ps.executeUpdate();
+           if(n>0){
+               llenarFiltro("");
+               JOptionPane.showMessageDialog(null, "Datos modificados");
+               limpiar();
+               
+           }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error al modificar el equipo");
+            limpiar();
+        }
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAceptarActionPerformed
 
@@ -202,6 +263,33 @@ public class ModificarEquipo extends javax.swing.JFrame {
         llenarFiltro(txtBusqueda.getText());
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBusquedaKeyReleased
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int fila= jTable1.getSelectedRow();
+       // String dato =(String) jTable1.getValueAt(fila, 1);
+       // txtNombreEq.setText(dato);
+        
+   
+        if(evt.getButton()== 1){
+           // int fila= jTable1.getSelectedRow();
+            try {
+                 //Deshabilitar();
+                
+                Conexion conn= new Conexion();
+                Connection con = conn.getConexion();
+                String sql="SELECT * FROM Equipo WHERE idEquipo="+ jTable1.getValueAt(fila, 0);
+                Statement ps= con.createStatement();
+                ResultSet rs = ps.executeQuery(sql);
+                rs.next();
+                   txtId.setText(String.valueOf(rs.getInt("idEquipo")));
+                   txtNombreEq.setText(rs.getString("nombreEquipo"));
+                   torneo();
+            } catch (Exception e) {
+            }
+        }
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -241,7 +329,7 @@ public class ModificarEquipo extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnAceptar;
     public javax.swing.JButton btnRegresar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<Torneo> cmbTorneo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -249,6 +337,7 @@ public class ModificarEquipo extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtBusqueda;
+    private javax.swing.JTextField txtId;
     public javax.swing.JTextField txtNombreEq;
     // End of variables declaration//GEN-END:variables
 }
