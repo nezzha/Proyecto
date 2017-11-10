@@ -278,7 +278,7 @@ public class ProgramarPartido extends javax.swing.JFrame {
             Date fecha= new Date();
             fecha=jdFecha.getDate();
 
-            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+            //SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 
             int id= cmbTorneo.getItemAt(cmbTorneo.getSelectedIndex()).getIdTorneo();
             System.out.println(id);

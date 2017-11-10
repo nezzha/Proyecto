@@ -6,9 +6,17 @@
 package Vista;
 
 import Modelo.Conexion;
+import Modelo.Exportar;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -88,6 +96,11 @@ public class ExportarTabla extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Exportar a Excel");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,6 +134,43 @@ public class ExportarTabla extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        if(this.jTable1.getRowCount()==0){
+            JOptionPane.showMessageDialog(null, "No hay datos en la tabla para exportar","listo",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        JFileChooser choose= new JFileChooser();
+        FileNameExtensionFilter filter= new FileNameExtensionFilter("Archivos de excel", "xls");
+        choose.setFileFilter(filter);
+        choose.setDialogTitle("Guardar archivo");
+        choose.setMultiSelectionEnabled(false);
+        choose.setAcceptAllFileFilterUsed(false);
+        if(choose.showSaveDialog(null)== JFileChooser.APPROVE_OPTION);
+            List<JTable> tb= new ArrayList<>();
+        List<String>nom= new ArrayList<>();
+        tb.add(jTable1);
+        nom.add("equipos");
+        //nom.add("PJ_Equipo");
+        //nom.add("PG_Equipo");
+       // System.out.println(""+nom);
+        String file=choose.getSelectedFile().toString().concat(".xls");
+        try {
+            Modelo.Exportar e = new Exportar(new File(file), tb, nom);
+            if(e.export()){
+                JOptionPane.showMessageDialog(null,"Los datos fueron exportados a excel.","Listo",JOptionPane.INFORMATION_MESSAGE);
+                
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Huboun error" +e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+        }
+        
+            
+                    
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
