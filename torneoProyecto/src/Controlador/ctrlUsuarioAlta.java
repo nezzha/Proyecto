@@ -40,17 +40,22 @@ public class ctrlUsuarioAlta implements ActionListener {
     public void actionPerformed(ActionEvent e){
     
         if(e.getSource() == frmRegistro.btnGuardar){
-             usuario.setNombreUsuario(frmRegistro.txtUsuario.getText());
-             usuario.setPassw(frmRegistro.txtPswd.getText());
-             usuario.setTipoUsuario(frmRegistro.cmbTipoUser.getSelectedItem().toString());
-             //JOptionPane.showMessageDialog(null, ""+ frmRegistro.cmbTipoUser.getSelectedItem().toString());
-             if(consulta.registrarUsuario(usuario)){
-                 JOptionPane.showMessageDialog(null, "Registro Guardado");
-                 limpiar();
-             }else{
-                 JOptionPane.showMessageDialog(null, "Error al Guardar");
-                  limpiar();
-             }
+            if(frmRegistro.txtUsuario.getText().equals("") ||frmRegistro.txtPswd.getText().equals("") ){
+                   JOptionPane.showMessageDialog(null, "Falntan campos por llenar");
+            }
+            else{
+                usuario.setNombreUsuario(frmRegistro.txtUsuario.getText());
+                usuario.setPassw(frmRegistro.txtPswd.getText());
+                usuario.setTipoUsuario(frmRegistro.cmbTipoUser.getSelectedItem().toString());
+                //JOptionPane.showMessageDialog(null, ""+ frmRegistro.cmbTipoUser.getSelectedItem().toString());
+                if(consulta.registrarUsuario(usuario)){
+                    JOptionPane.showMessageDialog(null, "Registro Guardado");
+                    limpiar();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Error al Guardar");
+                     limpiar();
+                }
+            }
         }
        
     }

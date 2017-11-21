@@ -179,6 +179,9 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         Connection con = conn.getConexion();
         int id= cmbTorneo.getItemAt(cmbTorneo.getSelectedIndex()).getIdTorneo();
         System.out.println(id);
+        if(txtNombreEq.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Falta nombre del equipo");
+        }else{
         try{
             String sql ="INSERT INTO Equipo (nombreEquipo,Torneo_idTorneo) VALUES(?,?)";  
             PreparedStatement ps= con.prepareCall(sql);
@@ -198,7 +201,7 @@ public class RegistrarEquipo extends javax.swing.JFrame {
           
         
         }
-
+      }
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAceptarActionPerformed
 

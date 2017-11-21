@@ -9,6 +9,7 @@ import Modelo.Conexion;
 import Modelo.Equipo;
 import Modelo.Torneo;
 import Modelo.Arbitro;
+import java.awt.event.ItemEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,6 +31,7 @@ import javax.swing.table.DefaultTableModel;
 public class ProgramarPartido extends javax.swing.JFrame {
     DateFormat df = DateFormat.getDateInstance();
     DefaultTableModel modelo;
+    
     /**
      * Creates new form ProgramarPartido
      */
@@ -37,8 +39,8 @@ public class ProgramarPartido extends javax.swing.JFrame {
         initComponents();
          this.setLocationRelativeTo(null);
         torneo();
-        Equipo();
-        EquipoDos();
+        //Equipo();
+        //EquipoDos();
         Arbitro();
     }
     public void limpiar(){
@@ -60,6 +62,7 @@ public class ProgramarPartido extends javax.swing.JFrame {
                 torneo.setIdTorneo(rs.getInt("idTorneo"));
                 cmbTorneo.addItem(torneo);
             }
+  
        
     }
     
@@ -83,11 +86,11 @@ public class ProgramarPartido extends javax.swing.JFrame {
     
      
      public void Equipo() throws SQLException{
-    
+     //int eq1=(cmbTorneo.getSelectedIndex()).getIdTorneo();
         Conexion conn= new Conexion();
         Connection con = conn.getConexion();
         
-        String sql ="SELECT * FROM Equipo";   
+        String sql ="SELECT * FROM Equipo where Torneo_idTorneo="+cmbTorneo.getItemAt(cmbTorneo.getSelectedIndex()).getIdTorneo();   
         PreparedStatement pst = con.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         
@@ -105,7 +108,7 @@ public class ProgramarPartido extends javax.swing.JFrame {
         Conexion conn= new Conexion();
         Connection con = conn.getConexion();
         
-        String sql ="SELECT * FROM Equipo";   
+        String sql ="SELECT * FROM Equipo where Torneo_idTorneo="+cmbTorneo.getItemAt(cmbTorneo.getSelectedIndex()).getIdTorneo();   
         PreparedStatement pst = con.prepareStatement(sql);
         ResultSet rs = pst.executeQuery();
         
@@ -114,9 +117,26 @@ public class ProgramarPartido extends javax.swing.JFrame {
                 equipo.setNombreEquipo(rs.getString("nombreEquipo"));
                 equipo.setIdEquipo(rs.getInt("idEquipo"));
                 cmbEquipoDos.addItem(equipo);
+                
             }
        
     }
+     
+     public void itemStateChanged (ItemEvent evt) throws SQLException {
+    if (evt.getStateChange () == ItemEvent.SELECTED) {
+        
+        Equipo();
+        EquipoDos();
+       
+        //cmbEquipoUno.removeAllItems();
+        //cmbEquipoDos.removeAllItems();
+        //cmbEquipoUno.setSelectedItem("Seleccione");
+        //cmbEquipoDos.setSelectedItem("Seleccione");
+    }     
+     else {
+        
+    }
+}
     
 
     /**
@@ -150,6 +170,12 @@ public class ProgramarPartido extends javax.swing.JFrame {
         jLabel1.setText("PROGRAMAR PARTIDO");
 
         jLabel2.setText("Nombre de Torneo:");
+
+        cmbTorneo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbTorneoItemStateChanged(evt);
+            }
+        });
 
         jLabel3.setText("Equipo 1:");
 
@@ -294,7 +320,7 @@ public class ProgramarPartido extends javax.swing.JFrame {
                 ps.setString(2, txtHora.getText());
                 ps.setInt(3, cmbEquipoUno.getItemAt(cmbEquipoUno.getSelectedIndex()).getIdEquipo());
                 ps.setInt(4, cmbEquipoDos.getItemAt(cmbEquipoDos.getSelectedIndex()).getIdEquipo());  
-                ps.setInt(5, cmArbitro.getItemAt(cmbTorneo.getSelectedIndex()).getIdArbitro());
+                ps.setInt(5, cmArbitro.getItemAt(cmArbitro.getSelectedIndex()).getIdArbitro());
 
              int n = ps.executeUpdate();
              if(n>0){
@@ -327,6 +353,25 @@ public class ProgramarPartido extends javax.swing.JFrame {
         this.setVisible(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void cmbTorneoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbTorneoItemStateChanged
+        try {
+            cmbEquipoUno.removeAllItems();
+            cmbEquipoDos.removeAllItems();
+            itemStateChanged(evt);  
+           /* if(c>2){
+            
+            cmbEquipoUno.removeAllItems();
+            cmbEquipoDos.removeAllItems();
+             itemStateChanged(evt);  
+            }*/
+            
+            
+            // TODO add your handling code here:
+        } catch (SQLException ex) {
+            Logger.getLogger(ProgramarPartido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cmbTorneoItemStateChanged
 
     /**
      * @param args the command line arguments

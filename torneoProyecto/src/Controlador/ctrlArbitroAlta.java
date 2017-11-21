@@ -38,6 +38,10 @@ public class ctrlArbitroAlta implements ActionListener {
     public void actionPerformed(ActionEvent e){
     
         if(e.getSource() == frmAltaAr.btnRegistrar){
+            if(frmAltaAr.txtNombre.getText().equals("") &&  frmAltaAr.txtApellidos.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Faltan campos por rellenar");
+                //System.out.println("aquiii");
+            }else{
              arbitro.setNombreArbitro(frmAltaAr.txtNombre.getText());
              arbitro.setApellidoArbitro(frmAltaAr.txtApellidos.getText());
              if(consulta.registrarArbitro(arbitro)){
@@ -47,6 +51,7 @@ public class ctrlArbitroAlta implements ActionListener {
                  JOptionPane.showMessageDialog(null, "Error al Guardar");
                   limpiar();
              }
+           }
         }
        
     }

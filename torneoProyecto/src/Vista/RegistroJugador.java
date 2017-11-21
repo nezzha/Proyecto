@@ -167,31 +167,36 @@ public class RegistroJugador extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-       Conexion conn= new Conexion();
-        Connection con = conn.getConexion();
-        int id= cmbEquipo.getItemAt(cmbEquipo.getSelectedIndex()).getIdEquipo();
-        System.out.println(id);
-        try{
-            String sql ="INSERT INTO Jugador (nombreJugador,apellidosJugador,Equipo_idEquipo) VALUES(?,?,?)";  
-            PreparedStatement ps= con.prepareCall(sql);
-            
-            ps.setString(1, txtNombre.getText());
-            ps.setString(2, txtApellido.getText());
-            ps.setInt(3, cmbEquipo.getItemAt(cmbEquipo.getSelectedIndex()).getIdEquipo());
-     
-         int n = ps.executeUpdate();
-         if(n>0){
-         
-             JOptionPane.showMessageDialog(null, "Datos guardados");
-             limpiar();
-             
-         }
-          
-        }catch(SQLException e){
-            System.err.println(e);
-            limpiar();
-        
+        if(txtNombre.getText().equals("") || txtApellido.getText().equals("") ){
+                JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
+        }    
+        else{
+            Conexion conn= new Conexion();
+             Connection con = conn.getConexion();
+             int id= cmbEquipo.getItemAt(cmbEquipo.getSelectedIndex()).getIdEquipo();
+             System.out.println(id);
+             try{
+                 String sql ="INSERT INTO Jugador (nombreJugador,apellidosJugador,Equipo_idEquipo) VALUES(?,?,?)";  
+                 PreparedStatement ps= con.prepareCall(sql);
+
+                 ps.setString(1, txtNombre.getText());
+                 ps.setString(2, txtApellido.getText());
+                 ps.setInt(3, cmbEquipo.getItemAt(cmbEquipo.getSelectedIndex()).getIdEquipo());
+
+              int n = ps.executeUpdate();
+              if(n>0){
+
+                  JOptionPane.showMessageDialog(null, "Datos guardados");
+                  limpiar();
+
+              }
+
+             }catch(SQLException e){
+                 System.err.println(e);
+                 limpiar();
+
         }
+    }
         // TODO add your handling code here:
     }//GEN-LAST:event_btnGuardarActionPerformed
 

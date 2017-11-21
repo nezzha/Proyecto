@@ -26,6 +26,11 @@ import javax.swing.table.DefaultTableModel;
 public class Resultados extends javax.swing.JFrame {
     DateFormat df = DateFormat.getDateInstance();
      DefaultTableModel modelo;
+     int p1=0;
+       int p2=0;
+        int puntos=0,gf=0,gc=0;
+        int puntos2=0,gf2=0,gc2=0;
+        
     /**
      * Creates new form Resultados
      */
@@ -42,15 +47,138 @@ public class Resultados extends javax.swing.JFrame {
        System.out.println(" " + n);
        
        if( n == 0){
+           p1=3;
            cmbEqui2.setSelectedIndex(1);
-       }
+           p2=1;
+           System.out.println(" " + p1+ "" + p2);
+       }else if(n==1){
+           p1=1;
+           p2=3;
+           cmbEqui2.setSelectedIndex(0);
+           System.out.println(" " + p1+ "" + p2);
+       }else if(n==2){
+           cmbEqui2.setSelectedIndex(2);
+           p1=0;
+           p2=0;
+           System.out.println(" " + p1+ "" + p2);
+       }   
        
     } else {
         
     }
 }
+    public void insertar(int golesF,int golesC, int p , int id){
+    
+    try {
+            
+            Conexion conn= new Conexion();
+            Connection con = conn.getConexion();
+            String sql ="UPDATE Equipo SET GF_Equipo=?, GC_Equipo=?, Puntos_Equipo=? WHERE idEquipo=?";  
+            PreparedStatement ps= con.prepareStatement(sql);
+            ps.setInt(1, golesF);
+            ps.setInt(2, golesC );
+            ps.setInt(3, p);
+            ps.setInt(4, id);
+            //System.out.print("estado "+bvar2+"  Campeon "+txtCampeon.getText()+ " " +txtId.getText());
+            int n= ps.executeUpdate();
+           if(n>0){
+               //llenarFiltro("");
+               JOptionPane.showMessageDialog(null, "Datos modificados");
+        
+               
+           }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error al modificar el equipo");
+            limpiar();
+        }
     
     
+    }
+    
+    public void insertarEq2(int golesF,int golesC, int p , int id){
+    
+    try {
+            
+            Conexion conn= new Conexion();
+            Connection con = conn.getConexion();
+            String sql ="UPDATE Equipo SET GF_Equipo=?, GC_Equipo=?, Puntos_Equipo=? WHERE idEquipo=?";  
+            PreparedStatement ps= con.prepareStatement(sql);
+            ps.setInt(1, golesF);
+            ps.setInt(2, golesC );
+            ps.setInt(3, p);
+            ps.setInt(4, id);
+            //System.out.print("estado "+bvar2+"  Campeon "+txtCampeon.getText()+ " " +txtId.getText());
+            int n= ps.executeUpdate();
+           if(n>0){
+               //llenarFiltro("");
+               JOptionPane.showMessageDialog(null, "Datos modificados");
+              
+               
+           }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Error al modificar el equipo");
+            limpiar();
+        }
+    
+    
+    }
+    
+    public void puntos(int id){
+    
+         try {
+            
+            Conexion conn= new Conexion();
+            Connection con = conn.getConexion();
+           
+         
+            String sql ="select GF_Equipo,GC_Equipo,Puntos_Equipo from equipo where idEquipo='"+id +"'";
+            Statement ps= con.createStatement();
+            ResultSet rs = ps.executeQuery(sql);
+            String[] fila =  new String[10];
+            while(rs.next()){
+               gf= Integer.parseInt(rs.getString("GF_Equipo"));
+               gc= Integer.parseInt(rs.getString("GC_Equipo"));
+               puntos= Integer.parseInt(rs.getString("Puntos_Equipo"));
+            }
+           
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+     public void puntosEq2(int id){
+    
+         try {
+            
+            Conexion conn= new Conexion();
+            Connection con = conn.getConexion();
+           
+         
+            String sql ="select GF_Equipo,GC_Equipo,Puntos_Equipo from equipo where idEquipo='"+id +"'";
+            Statement ps= con.createStatement();
+            ResultSet rs = ps.executeQuery(sql);
+ 
+            while(rs.next()){
+               gf2= Integer.parseInt(rs.getString("GF_Equipo"));
+               gc2= Integer.parseInt(rs.getString("GC_Equipo"));
+               puntos2= Integer.parseInt(rs.getString("Puntos_Equipo"));
+            }
+           
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void limpiar(){
+    txtEq1.setText("");
+    txtEq2.setText("");
+    txtGoles.setText("");
+    txtGoles2.setText("");
+    txtIdEq1.setText("");
+    txtIdEq2.setText("");
+    }
    public void llenar(){
        
        Date date=jdFecha.getDate(); 
@@ -116,6 +244,12 @@ public class Resultados extends javax.swing.JFrame {
         jdFecha = new com.toedter.calendar.JDateChooser();
         jLabel7 = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
+        txtGoles = new javax.swing.JTextField();
+        txtGoles2 = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtIdEq1 = new javax.swing.JTextField();
+        txtIdEq2 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -186,6 +320,10 @@ public class Resultados extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setText("Goles:");
+
+        jLabel8.setText("Goles:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -200,40 +338,50 @@ public class Resultados extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jdFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(157, 157, 157)
-                                .addComponent(btnBuscar)
-                                .addContainerGap())
+                                .addComponent(btnBuscar))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(193, 193, 193)
-                                .addComponent(jLabel1)
-                                .addGap(309, 309, 309))))
+                                .addComponent(jLabel1)))
+                        .addGap(272, 272, 272))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
-                                    .addComponent(jLabel4))
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtEq1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cmbEquipo1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(txtGoles, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(cmbEquipo1, javax.swing.GroupLayout.Alignment.LEADING, 0, 154, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
-                                    .addComponent(jLabel3))
-                                .addGap(96, 96, 96))
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel6)
+                                    .addComponent(txtIdEq2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(85, 85, 85))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbEqui2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtEq2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(49, 49, 49)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtGoles2, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(cmbEqui2, javax.swing.GroupLayout.Alignment.LEADING, 0, 154, Short.MAX_VALUE)))
                         .addGap(47, 47, 47))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 724, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(txtIdEq1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 724, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -248,7 +396,11 @@ public class Resultados extends javax.swing.JFrame {
                     .addComponent(btnBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtIdEq1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtIdEq2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtEq1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -260,7 +412,13 @@ public class Resultados extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(cmbEqui2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
-                .addGap(59, 59, 59)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtGoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtGoles2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel8))
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -271,7 +429,9 @@ public class Resultados extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+        MenuPartido partido=new MenuPartido();
+        partido.setVisible(true);
+        this.setVisible(false);
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -296,13 +456,19 @@ public class Resultados extends javax.swing.JFrame {
                 Connection con = conn.getConexion();
                 //String sql ="SELECT j.idJugador, j.nombreJugador, j.apellidosJugador ,e.nombreEquipo FROM Equipo e, Jugador j WHERE e.idEquipo = j.Equipo_idEquipo AND idJugador="+ jTable1.getValueAt(fila, 0);
                 String sql ="select idPartido, fechaPartido, \n" +
-                "(select nombreEquipo from equipo where Equipo_idEquipo1 = idEquipo) as Equipo1, \n" +
-                "(select nombreEquipo from equipo where Equipo_idEquipo2 = idEquipo) as Equipo2,\n" +
-                "horaPartido,nombreArbitro from partido, arbitro\n" +
-                "where arbitro.idArbitro= partido.Arbitro_idArbitro AND fechaPartido = '"+ fecha+"' AND idPartido="+jTable1.getValueAt(fila, 0);
+                    "(select nombreEquipo from equipo where Equipo_idEquipo1 = idEquipo) as Equipo1, \n" +
+                    "(select nombreEquipo from equipo where Equipo_idEquipo2 = idEquipo) as Equipo2,\n" +
+                    "(select idEquipo from equipo where Equipo_idEquipo1 = idEquipo) as id1,\n" +
+                    "(select idEquipo from equipo where Equipo_idEquipo2 = idEquipo) as id2,\n" +
+                    "horaPartido,nombreArbitro from partido, arbitro\n" +
+                    "where arbitro.idArbitro= partido.Arbitro_idArbitro  and fechaPartido = '"+ fecha+"' AND idPartido="+jTable1.getValueAt(fila, 0);
+                
+                
                 Statement ps= con.createStatement();
                 ResultSet rs = ps.executeQuery(sql);
                 rs.next();
+                   txtIdEq1.setText(rs.getString("id1"));
+                   txtIdEq2.setText(rs.getString("id2"));
                    txtEq1.setText(rs.getString("Equipo1"));
                    txtEq2.setText(rs.getString("Equipo2"));
                    //txtEquipo.setText(rs.getString("nombreEquipo"));
@@ -323,39 +489,76 @@ public class Resultados extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        //String dato1 = (String) cmbEquipo1.getSelectedItem();
-        //String dato2 = (String) cmbEqui2.getSelectedItem();
+        int gol1 = Integer.parseInt(txtGoles.getText());
+        int gol2= Integer.parseInt(txtGoles2.getText());;
+        if (p1==3 && p2==1){
+            if(gol1>gol2){
+                
+                puntos(Integer.parseInt(txtIdEq1.getText()));
+                System.out.println(gf+""+""+gc+""+puntos+"");
+                int g1=gf+ Integer.parseInt(txtGoles.getText());
+                int g2=gc+ Integer.parseInt(txtGoles2.getText());
+                int pe=puntos+ p1;
+                insertar(g1,g2, pe, Integer.parseInt(txtIdEq1.getText()));
+                
+                puntosEq2(Integer.parseInt(txtIdEq2.getText()));
+                int g3=gf2+ Integer.parseInt(txtGoles.getText());
+                int g4=gc2+ Integer.parseInt(txtGoles2.getText());
+                int pe2=puntos2+ p2;
+                
+                insertarEq2(g3,g4,pe2,Integer.parseInt(txtIdEq2.getText()));
+                limpiar();
+            }else{
+            
+                JOptionPane.showMessageDialog(null, "Los goles del equipo uno deben ser mas");
+            }
         
-       int n =  (int) cmbEquipo1.getSelectedIndex();
-       System.out.println(" " + n);
-       
-       if( n == 0){
-           cmbEqui2.setSelectedIndex(1);
-       }else{
-             if(n == 1){
-                 cmbEqui2.setSelectedIndex(0);    
-             }else{
-                if(n == 2){
-                    cmbEqui2.setSelectedIndex(2);  
-                }
-             }
-       }     
-       /* if( dato1 != dato2){
-        System.out.println(" " + dato1);
-        System.out.println(" " + dato2);
+        }else if(p1==1 && p2==3){
+            if(gol1<gol2){
+                puntos(Integer.parseInt(txtIdEq1.getText()));
+                System.out.println(gf+""+""+gc+""+puntos+"");
+                int g1=gf+ Integer.parseInt(txtGoles.getText());
+                int g2=gc+ Integer.parseInt(txtGoles2.getText());
+                int pe=puntos+ p1;
+
+                puntosEq2(Integer.parseInt(txtIdEq2.getText()));
+                int g3=gf2+ Integer.parseInt(txtGoles.getText());
+                int g4=gc2+ Integer.parseInt(txtGoles2.getText());
+                int pe2=puntos2+ p2;
+                insertar(g1,g2, pe, Integer.parseInt(txtIdEq1.getText()));
+                insertarEq2(g3,g4,pe2,Integer.parseInt(txtIdEq2.getText()));
+                limpiar();
         
-            if(dato1.equals("Ganado")){
-                int valor1 = 3;
-                }else if(dato2.equals("Ganado")){
-                    int valor2 = 3;
-                }
+            
+            }else{
+            
+                JOptionPane.showMessageDialog(null, "Los goles del equipo dos deben ser mas");
+            }
+        }else if(p1==0 && p2==0){
+            if(gol1==gol2){
+                puntos(Integer.parseInt(txtIdEq1.getText()));
+                System.out.println(gf+""+""+gc+""+puntos+"");
+                int g1=gf+ Integer.parseInt(txtGoles.getText());
+                int g2=gc+ Integer.parseInt(txtGoles2.getText());
+                int pe=puntos+ p1;
+
+                puntosEq2(Integer.parseInt(txtIdEq2.getText()));
+                int g3=gf2+ Integer.parseInt(txtGoles2.getText());
+                int g4=gc2+ Integer.parseInt(txtGoles.getText());
+                int pe2=puntos2+ p2;
+                insertar(g1,g2, pe, Integer.parseInt(txtIdEq1.getText()));
+                insertarEq2(g3,g4,pe2,Integer.parseInt(txtIdEq2.getText()));
+                limpiar();
+        
+            
+            }else{
+            
+                JOptionPane.showMessageDialog(null, "Los goles del equipo uno y dos deben ser iguales");
+            }
+        
         }
-        else{
         
-            JOptionPane.showMessageDialog(null,"Error datos iguales");
-            System.out.println("Error datos iguales");
-        }
-        */
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -411,11 +614,17 @@ public class Resultados extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private com.toedter.calendar.JDateChooser jdFecha;
     private javax.swing.JTextField txtEq1;
     private javax.swing.JTextField txtEq2;
+    private javax.swing.JTextField txtGoles;
+    private javax.swing.JTextField txtGoles2;
+    private javax.swing.JTextField txtIdEq1;
+    private javax.swing.JTextField txtIdEq2;
     // End of variables declaration//GEN-END:variables
 }

@@ -38,15 +38,21 @@ public class ctrlTorneoAlta implements ActionListener{
     public void actionPerformed(ActionEvent e){
     
         if(e.getSource() == frmTorneo.btnGuardar){
-             torneo.setNombreTorneo(frmTorneo.txtNombreTorneo.getText());
-             if(consulta.registrarTorneo(torneo)){
-                 JOptionPane.showMessageDialog(null, "Registro Guardado");
-                 limpiar();
-             }else{
-                 JOptionPane.showMessageDialog(null, "Error al Guardar");
-                  limpiar();
-             }
+            if(frmTorneo.txtNombreTorneo.getText().equals("")){
+                        JOptionPane.showMessageDialog(null, "Faltan campo por llenar ");
+            }
+            else{
+                torneo.setNombreTorneo(frmTorneo.txtNombreTorneo.getText());
+                if(consulta.registrarTorneo(torneo)){
+                    JOptionPane.showMessageDialog(null, "Registro Guardado");
+                    limpiar();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Error al Guardar");
+                     limpiar();
+                }
+            }
         }
+        
        
     }
     

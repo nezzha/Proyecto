@@ -49,6 +49,11 @@ public class MenuPartido extends javax.swing.JFrame {
         });
 
         btnRegistrarResult.setText("Registrar Resultados");
+        btnRegistrarResult.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarResultActionPerformed(evt);
+            }
+        });
 
         btnRegresar.setText("Regresar");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
@@ -113,6 +118,14 @@ public class MenuPartido extends javax.swing.JFrame {
       
         // TODO add your handling code here:
     }//GEN-LAST:event_btnProgramarPartidoActionPerformed
+
+    private void btnRegistrarResultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarResultActionPerformed
+        Resultados resultados= new Resultados();
+        resultados.setVisible(true);
+        this.setVisible(false);
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRegistrarResultActionPerformed
 
     /**
      * @param args the command line arguments
