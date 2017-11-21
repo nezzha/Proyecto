@@ -5,17 +5,90 @@
  */
 package Vista;
 
+import Modelo.Conexion;
+import Modelo.Torneo;
+import java.awt.event.ItemEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Vanessa
  */
 public class Resultados extends javax.swing.JFrame {
-
+    DateFormat df = DateFormat.getDateInstance();
+     DefaultTableModel modelo;
     /**
      * Creates new form Resultados
      */
     public Resultados() {
         initComponents();
+        txtEq1.setEditable(false);
+        txtEq2.setEditable(false);
+    }
+    
+    public void itemStateChanged (ItemEvent evt) {
+    if (evt.getStateChange () == ItemEvent.SELECTED) {
+        
+          int n =  (int) cmbEquipo1.getSelectedIndex();
+       System.out.println(" " + n);
+       
+       if( n == 0){
+           cmbEqui2.setSelectedIndex(1);
+       }
+       
+    } else {
+        
+    }
+}
+    
+    
+   public void llenar(){
+       
+       Date date=jdFecha.getDate(); 
+        SimpleDateFormat format2=new SimpleDateFormat("yyyy-MM-dd"); 
+        String fecha;
+        // TODO add your handling code here:
+        fecha = format2.format(date);
+        
+        System.out.println(" " + fecha);
+        try {
+            
+            Conexion conn= new Conexion();
+            Connection con = conn.getConexion();
+           
+            String[] titulos={"id Partido","Fecha Partido","Nombre de Equipo Uno","Nombre de Equipo Dos","Hora","Nombre de Arbitro"};
+            String sql ="select idPartido, fechaPartido, \n" +
+                "(select nombreEquipo from equipo where Equipo_idEquipo1 = idEquipo) as Equipo1, \n" +
+                "(select nombreEquipo from equipo where Equipo_idEquipo2 = idEquipo) as Equipo2,\n" +
+                "horaPartido,nombreArbitro from partido, arbitro\n" +
+                "where arbitro.idArbitro= partido.Arbitro_idArbitro AND fechaPartido = '"+ fecha+"' ";
+            modelo = new DefaultTableModel(null,titulos);
+            Statement ps= con.createStatement();
+            ResultSet rs = ps.executeQuery(sql);
+            String[] fila =  new String[10];
+            while(rs.next()){
+                fila[0]=rs.getString("idPartido");
+                fila[1]=rs.getString("fechaPartido");
+                fila[2]=rs.getString("Equipo1");
+                fila[3]=rs.getString("Equipo2");
+                fila[4]=rs.getString("horaPartido");
+                fila[5]=rs.getString("nombreArbitro");
+                modelo.addRow(fila);
+            }
+            jTable1.setModel(modelo);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
     }
 
     /**
@@ -40,6 +113,9 @@ public class Resultados extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jdFecha = new com.toedter.calendar.JDateChooser();
+        jLabel7 = new javax.swing.JLabel();
+        btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,6 +126,11 @@ public class Resultados extends javax.swing.JFrame {
         jLabel3.setText("Equipo 2:");
 
         cmbEquipo1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ganado", "Perdido", "Empatado" }));
+        cmbEquipo1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbEquipo1ItemStateChanged(evt);
+            }
+        });
 
         jLabel4.setText("Resultado");
 
@@ -65,6 +146,11 @@ public class Resultados extends javax.swing.JFrame {
         });
 
         jButton2.setText("Guardar Resultados");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -77,7 +163,28 @@ public class Resultados extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
+
+        jdFecha.setDateFormatString("dd-MM-yyyy");
+        jdFecha.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jdFechaMouseClicked(evt);
+            }
+        });
+
+        jLabel7.setText("Fecha:");
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,44 +194,59 @@ public class Resultados extends javax.swing.JFrame {
                 .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtEq1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbEquipo1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel3))
-                        .addGap(96, 96, 96))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbEqui2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtEq2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(47, 47, 47))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jdFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(157, 157, 157)
+                                .addComponent(btnBuscar)
+                                .addContainerGap())
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(193, 193, 193)
+                                .addComponent(jLabel1)
+                                .addGap(309, 309, 309))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(131, 131, 131))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(309, 309, 309))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtEq1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbEquipo1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel3))
+                                .addGap(96, 96, 96))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbEqui2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEq2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(49, 49, 49)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(47, 47, 47))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 724, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
+                .addGap(38, 38, 38)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jdFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
+                    .addComponent(btnBuscar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -153,6 +275,95 @@ public class Resultados extends javax.swing.JFrame {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jdFechaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jdFechaMouseClicked
+
+      
+    }//GEN-LAST:event_jdFechaMouseClicked
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        Date date=jdFecha.getDate(); 
+        SimpleDateFormat format2=new SimpleDateFormat("yyyy-MM-dd"); 
+        String fecha;
+
+        fecha = format2.format(date);
+        
+        if(evt.getButton()== 1){
+            int fila= jTable1.getSelectedRow();
+            try {
+               
+                Conexion conn= new Conexion();
+                Connection con = conn.getConexion();
+                //String sql ="SELECT j.idJugador, j.nombreJugador, j.apellidosJugador ,e.nombreEquipo FROM Equipo e, Jugador j WHERE e.idEquipo = j.Equipo_idEquipo AND idJugador="+ jTable1.getValueAt(fila, 0);
+                String sql ="select idPartido, fechaPartido, \n" +
+                "(select nombreEquipo from equipo where Equipo_idEquipo1 = idEquipo) as Equipo1, \n" +
+                "(select nombreEquipo from equipo where Equipo_idEquipo2 = idEquipo) as Equipo2,\n" +
+                "horaPartido,nombreArbitro from partido, arbitro\n" +
+                "where arbitro.idArbitro= partido.Arbitro_idArbitro AND fechaPartido = '"+ fecha+"' AND idPartido="+jTable1.getValueAt(fila, 0);
+                Statement ps= con.createStatement();
+                ResultSet rs = ps.executeQuery(sql);
+                rs.next();
+                   txtEq1.setText(rs.getString("Equipo1"));
+                   txtEq2.setText(rs.getString("Equipo2"));
+                   //txtEquipo.setText(rs.getString("nombreEquipo"));
+                  
+                  
+            } catch (Exception e) {
+            }
+        }
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        
+          llenar();
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        //String dato1 = (String) cmbEquipo1.getSelectedItem();
+        //String dato2 = (String) cmbEqui2.getSelectedItem();
+        
+       int n =  (int) cmbEquipo1.getSelectedIndex();
+       System.out.println(" " + n);
+       
+       if( n == 0){
+           cmbEqui2.setSelectedIndex(1);
+       }else{
+             if(n == 1){
+                 cmbEqui2.setSelectedIndex(0);    
+             }else{
+                if(n == 2){
+                    cmbEqui2.setSelectedIndex(2);  
+                }
+             }
+       }     
+       /* if( dato1 != dato2){
+        System.out.println(" " + dato1);
+        System.out.println(" " + dato2);
+        
+            if(dato1.equals("Ganado")){
+                int valor1 = 3;
+                }else if(dato2.equals("Ganado")){
+                    int valor2 = 3;
+                }
+        }
+        else{
+        
+            JOptionPane.showMessageDialog(null,"Error datos iguales");
+            System.out.println("Error datos iguales");
+        }
+        */
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void cmbEquipo1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbEquipo1ItemStateChanged
+       itemStateChanged(evt);
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbEquipo1ItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -190,6 +401,7 @@ public class Resultados extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JComboBox<String> cmbEqui2;
     private javax.swing.JComboBox<String> cmbEquipo1;
     private javax.swing.JButton jButton1;
@@ -199,8 +411,10 @@ public class Resultados extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private com.toedter.calendar.JDateChooser jdFecha;
     private javax.swing.JTextField txtEq1;
     private javax.swing.JTextField txtEq2;
     // End of variables declaration//GEN-END:variables

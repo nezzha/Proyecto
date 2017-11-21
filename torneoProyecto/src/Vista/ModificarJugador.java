@@ -26,6 +26,7 @@ public class ModificarJugador extends javax.swing.JFrame {
      */
     public ModificarJugador() {
         initComponents();
+        this.setLocationRelativeTo(null);
         llenarFiltro("");
         txtId.setVisible(false);
     }
@@ -231,7 +232,7 @@ public class ModificarJugador extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
 
-        MenuEquipo menu= new MenuEquipo();
+        MenuJugador menu= new MenuJugador();
         //if(menu.txtTipoMenu.getText().equals("administrador"))
         menu.setVisible(true);
         this.setVisible(false);

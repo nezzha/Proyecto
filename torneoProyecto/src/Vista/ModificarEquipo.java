@@ -27,7 +27,8 @@ public class ModificarEquipo extends javax.swing.JFrame {
     public ModificarEquipo() {
         initComponents();
         llenarFiltro("");
-        //txtId.setVisible(false);
+         this.setLocationRelativeTo(null);
+        txtId.setVisible(false);
     }
     
     public void llenarFiltro(String filtro){

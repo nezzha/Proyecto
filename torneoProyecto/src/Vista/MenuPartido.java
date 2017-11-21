@@ -5,6 +5,10 @@
  */
 package Vista;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Vanessa
@@ -38,6 +42,11 @@ public class MenuPartido extends javax.swing.JFrame {
         jLabel1.setText("MENÚ DE PARTIDOS");
 
         btnProgramarPartido.setText("Programar Partido");
+        btnProgramarPartido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProgramarPartidoActionPerformed(evt);
+            }
+        });
 
         btnRegistrarResult.setText("Registrar Resultados");
 
@@ -60,9 +69,9 @@ public class MenuPartido extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(61, 61, 61)
-                        .addComponent(btnProgramarPartido, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnRegistrarResult))
+                        .addComponent(btnProgramarPartido, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnRegistrarResult, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -91,6 +100,19 @@ public class MenuPartido extends javax.swing.JFrame {
         this.setVisible(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnProgramarPartidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProgramarPartidoActionPerformed
+       ProgramarPartido partido;
+        try {
+            partido = new ProgramarPartido();
+             partido.setVisible(true);
+             this.setVisible(false);
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuPartido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnProgramarPartidoActionPerformed
 
     /**
      * @param args the command line arguments

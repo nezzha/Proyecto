@@ -35,10 +35,15 @@ public class ProgramarPartido extends javax.swing.JFrame {
      */
     public ProgramarPartido() throws SQLException {
         initComponents();
+         this.setLocationRelativeTo(null);
         torneo();
         Equipo();
         EquipoDos();
         Arbitro();
+    }
+    public void limpiar(){
+    txtHora.setText("");
+    jdFecha.setDate(new Date());
     }
     public void torneo() throws SQLException{
     
@@ -295,12 +300,13 @@ public class ProgramarPartido extends javax.swing.JFrame {
              if(n>0){
 
                  JOptionPane.showMessageDialog(null, "Datos guardados");
-
+                 limpiar();
              }
 
             }catch(SQLException e){
                 System.err.println(e);
-
+                limpiar();
+                
 
             }
         
@@ -317,6 +323,8 @@ public class ProgramarPartido extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         MenuPartido menu = new MenuPartido();
+        menu.setVisible(true);
+        this.setVisible(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
