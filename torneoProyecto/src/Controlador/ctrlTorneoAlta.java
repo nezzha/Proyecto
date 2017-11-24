@@ -38,8 +38,9 @@ public class ctrlTorneoAlta implements ActionListener{
     public void actionPerformed(ActionEvent e){
     
         if(e.getSource() == frmTorneo.btnGuardar){
-            if(frmTorneo.txtNombreTorneo.getText().equals("")){
+            if(frmTorneo.txtNombreTorneo.getText().trim().length()==0){
                         JOptionPane.showMessageDialog(null, "Faltan campo por llenar ");
+                        frmTorneo.txtNombreTorneo.setText("");
             }
             else{
                 torneo.setNombreTorneo(frmTorneo.txtNombreTorneo.getText());

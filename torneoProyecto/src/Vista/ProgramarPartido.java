@@ -196,6 +196,12 @@ public class ProgramarPartido extends javax.swing.JFrame {
 
         jLabel7.setText("Hora:");
 
+        txtHora.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtHoraKeyTyped(evt);
+            }
+        });
+
         jLabel8.setText("Arbitro:");
 
         jButton2.setText("Regresar");
@@ -300,8 +306,12 @@ public class ProgramarPartido extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        if(txtHora.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(null, "Error hora vacia");
+        }else{
         int e1=cmbEquipoUno.getItemAt(cmbEquipoUno.getSelectedIndex()).getIdEquipo();
-        int e2=cmbEquipoDos.getItemAt(cmbEquipoDos.getSelectedIndex()).getIdEquipo();
+        int e2=cmbEquipoDos.getItemAt(cmbEquipoDos.getSelectedIndex()).getIdEquipo();    
         if(e1 != e2 ){
         
             Conexion conn= new Conexion();
@@ -343,7 +353,7 @@ public class ProgramarPartido extends javax.swing.JFrame {
         }
         
         
-
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -372,6 +382,14 @@ public class ProgramarPartido extends javax.swing.JFrame {
             Logger.getLogger(ProgramarPartido.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_cmbTorneoItemStateChanged
+
+    private void txtHoraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHoraKeyTyped
+        char caracter= evt.getKeyChar();
+        if(((caracter < '0') || (caracter > '9') && (caracter != '\b') && (caracter != ':'))){
+            evt.consume();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtHoraKeyTyped
 
     /**
      * @param args the command line arguments

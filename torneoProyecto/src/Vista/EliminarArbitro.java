@@ -22,6 +22,7 @@ public class EliminarArbitro extends javax.swing.JFrame {
         initComponents();
         //jTable1.setEnabled(false);
         llenarFiltro("");
+        Deshabilitar();
     }
     
     public void limpiar(){
@@ -222,7 +223,7 @@ public class EliminarArbitro extends javax.swing.JFrame {
         if(evt.getButton()== 1){
             int fila= jTable1.getSelectedRow();
             try {
-                 Deshabilitar();
+                 //Deshabilitar();
                 Conexion conn= new Conexion();
                 Connection con = conn.getConexion();
                 String sql="SELECT * FROM Arbitro WHERE idArbitro="+ jTable1.getValueAt(fila, 0);
@@ -258,7 +259,12 @@ public class EliminarArbitro extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyReleased
-        llenarFiltro(txtBusqueda.getText());
+        String busqueda =txtBusqueda.getText();
+        if(busqueda.trim().length() == 0){
+            JOptionPane.showInternalMessageDialog(null, "El campo esta vacio");
+        }else{
+            llenarFiltro(txtBusqueda.getText());
+       }
         // TODO add your handling code here:
     }//GEN-LAST:event_txtBusquedaKeyReleased
 

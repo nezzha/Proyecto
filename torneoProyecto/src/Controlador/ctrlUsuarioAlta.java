@@ -40,8 +40,10 @@ public class ctrlUsuarioAlta implements ActionListener {
     public void actionPerformed(ActionEvent e){
     
         if(e.getSource() == frmRegistro.btnGuardar){
-            if(frmRegistro.txtUsuario.getText().equals("") ||frmRegistro.txtPswd.getText().equals("") ){
+            if(frmRegistro.txtUsuario.getText().trim().length()==0 ||frmRegistro.txtPswd.getText().trim().length()==0 ){
                    JOptionPane.showMessageDialog(null, "Falntan campos por llenar");
+                   frmRegistro.txtUsuario.setText("");
+                   frmRegistro.txtPswd.setText("");
             }
             else{
                 usuario.setNombreUsuario(frmRegistro.txtUsuario.getText());

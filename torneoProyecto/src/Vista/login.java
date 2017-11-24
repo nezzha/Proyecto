@@ -168,9 +168,10 @@ public class login extends javax.swing.JFrame {
         String usuario =txtUser.getText();
         String pass = txtPassword.getText();
         
-        if(usuario.equals("") && pass.equals("") ){
+        if(usuario.trim().length()==0 && pass.trim().length()==0 ){
 
             JOptionPane.showMessageDialog(null, "Campos vacios");
+            limpiar();
 
         }else{
             try{

@@ -25,6 +25,7 @@ public class EliminarJugador extends javax.swing.JFrame {
         initComponents();
          this.setLocationRelativeTo(null);
          llenarFiltro("");
+          Deshabilitar();
     }
     
      public void llenarFiltro(String filtro){
@@ -224,7 +225,7 @@ public class EliminarJugador extends javax.swing.JFrame {
          if(evt.getButton()== 1){
             int fila= jTable1.getSelectedRow();
             try {
-                 Deshabilitar();
+                
                 Conexion conn= new Conexion();
                 Connection con = conn.getConexion();
                   String sql ="SELECT j.idJugador, j.nombreJugador, j.apellidosJugador ,e.nombreEquipo FROM Equipo e, Jugador j WHERE e.idEquipo = j.Equipo_idEquipo AND idJugador="+ jTable1.getValueAt(fila, 0);

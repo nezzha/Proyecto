@@ -29,6 +29,7 @@ public class FinalizarTorneo extends javax.swing.JFrame {
         initComponents();
         llenarFiltro("");
         txtId.setVisible(false);
+        txtNombreTorneo.setEditable(false);
     }
     
     public void limpiar(){
@@ -276,6 +277,10 @@ public class FinalizarTorneo extends javax.swing.JFrame {
         
        // System.out.print("estado"+bvar2+"Campeon"+txtCampeon.getText()+ " " +v);
        // actualizarEquipo(txtCampeon.getText(), bvar2, v);
+        if(txtCampeon.getText().trim().length()==0){
+            JOptionPane.showMessageDialog(null, "Campo de Campeon vacio");
+                
+        }else{
         
          try {
             
@@ -299,7 +304,7 @@ public class FinalizarTorneo extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Error al eliminar usuario");
             limpiar();
         }
-
+    }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 

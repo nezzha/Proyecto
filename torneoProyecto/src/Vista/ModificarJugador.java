@@ -239,7 +239,10 @@ public class ModificarJugador extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        if(txtNombre.getText().trim().length()==0 || txtApellido.getText().trim().length() == 0){
+                JOptionPane.showMessageDialog(null, "campos vacios");
+
+        }else{
          try {
             
             Conexion conn= new Conexion();
@@ -262,6 +265,7 @@ public class ModificarJugador extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Error al modificar el jugador");
             limpiar();
+        }
         }
 
         // TODO add your handling code here:

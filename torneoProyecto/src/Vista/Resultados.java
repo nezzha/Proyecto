@@ -30,7 +30,8 @@ public class Resultados extends javax.swing.JFrame {
        int p2=0;
         int puntos=0,gf=0,gc=0;
         int puntos2=0,gf2=0,gc2=0;
-        
+        int pg1=0,pp1=0,pe1=0,pj1=0;
+        int pg2=0,pp2=0,pe2=0,pj2=0;
     /**
      * Creates new form Resultados
      */
@@ -51,34 +52,66 @@ public class Resultados extends javax.swing.JFrame {
            cmbEqui2.setSelectedIndex(1);
            p2=1;
            System.out.println(" " + p1+ "" + p2);
+           /* pg1=pg1 + 1;
+            pp1=0;
+            pe1=0;
+            pj1=pj1;
+            
+            pg2=0;
+            pp2=pp2 + 1;
+            pe2=0;
+            pj2=pj2 + 1;*/
        }else if(n==1){
            p1=1;
            p2=3;
            cmbEqui2.setSelectedIndex(0);
            System.out.println(" " + p1+ "" + p2);
+           
+           /* pg1=0;
+            pp1=pp1+1;
+            pe1=0;
+            pj1=pj1+1;
+            
+            pg2=pg2+1;
+            pp2=0;
+            pe2=0;
+            pj2=pj2 + 1;*/
        }else if(n==2){
            cmbEqui2.setSelectedIndex(2);
            p1=0;
            p2=0;
            System.out.println(" " + p1+ "" + p2);
+            /*pg1=0;
+            pp1=0;
+            pe1=pe1+1;
+            pj1=pj1+1;
+            
+            pg2=0;
+            pp2=0;
+            pe2=pe2+1;
+            pj2=pj2 + 1;*/
        }   
        
     } else {
         
     }
 }
-    public void insertar(int golesF,int golesC, int p , int id){
+    public void insertar(int pju1,int pga1,int ppe1,int ppem1, int golesF,int golesC, int p , int id){
     
     try {
             
             Conexion conn= new Conexion();
             Connection con = conn.getConexion();
-            String sql ="UPDATE Equipo SET GF_Equipo=?, GC_Equipo=?, Puntos_Equipo=? WHERE idEquipo=?";  
+            String sql ="UPDATE Equipo SET PJ_Equipo=?,PG_Equipo=?,PP_Equipo=?, PE_Equipo=?, GF_Equipo=?, GC_Equipo=?, Puntos_Equipo=? WHERE idEquipo=?";  
             PreparedStatement ps= con.prepareStatement(sql);
-            ps.setInt(1, golesF);
-            ps.setInt(2, golesC );
-            ps.setInt(3, p);
-            ps.setInt(4, id);
+            ps.setInt(1, pju1);
+            ps.setInt(2, pga1 );
+            ps.setInt(3, ppe1);
+            ps.setInt(4, ppem1);
+            ps.setInt(5, golesF);
+            ps.setInt(6, golesC );
+            ps.setInt(7, p);
+            ps.setInt(8, id);
             //System.out.print("estado "+bvar2+"  Campeon "+txtCampeon.getText()+ " " +txtId.getText());
             int n= ps.executeUpdate();
            if(n>0){
@@ -96,18 +129,22 @@ public class Resultados extends javax.swing.JFrame {
     
     }
     
-    public void insertarEq2(int golesF,int golesC, int p , int id){
+    public void insertarEq2(int pju2,int pga2,int ppe2,int ppem2,int golesF,int golesC, int p , int id){
     
     try {
             
             Conexion conn= new Conexion();
             Connection con = conn.getConexion();
-            String sql ="UPDATE Equipo SET GF_Equipo=?, GC_Equipo=?, Puntos_Equipo=? WHERE idEquipo=?";  
+            String sql ="UPDATE Equipo SET PJ_Equipo=?,PG_Equipo=?,PP_Equipo=?, PE_Equipo=?, GF_Equipo=?, GC_Equipo=?, Puntos_Equipo=? WHERE idEquipo=?";  
             PreparedStatement ps= con.prepareStatement(sql);
-            ps.setInt(1, golesF);
-            ps.setInt(2, golesC );
-            ps.setInt(3, p);
-            ps.setInt(4, id);
+            ps.setInt(1, pju2);
+            ps.setInt(2, pga2 );
+            ps.setInt(3, ppe2);
+            ps.setInt(4, ppem2 );
+            ps.setInt(5, golesF);
+            ps.setInt(6, golesC );
+            ps.setInt(7, p);
+            ps.setInt(8, id);
             //System.out.print("estado "+bvar2+"  Campeon "+txtCampeon.getText()+ " " +txtId.getText());
             int n= ps.executeUpdate();
            if(n>0){
@@ -133,11 +170,15 @@ public class Resultados extends javax.swing.JFrame {
             Connection con = conn.getConexion();
            
          
-            String sql ="select GF_Equipo,GC_Equipo,Puntos_Equipo from equipo where idEquipo='"+id +"'";
+            String sql ="select PJ_Equipo,PG_Equipo,PP_Equipo, PE_Equipo, GF_Equipo,GC_Equipo,Puntos_Equipo from equipo where idEquipo='"+id +"'";
             Statement ps= con.createStatement();
             ResultSet rs = ps.executeQuery(sql);
             String[] fila =  new String[10];
             while(rs.next()){
+               pg1=Integer.parseInt(rs.getString("PG_Equipo"));
+               pp1=Integer.parseInt(rs.getString("PP_Equipo"));
+               pe1=Integer.parseInt(rs.getString("PE_Equipo"));
+               pj1=Integer.parseInt(rs.getString("PJ_Equipo"));
                gf= Integer.parseInt(rs.getString("GF_Equipo"));
                gc= Integer.parseInt(rs.getString("GC_Equipo"));
                puntos= Integer.parseInt(rs.getString("Puntos_Equipo"));
@@ -156,11 +197,15 @@ public class Resultados extends javax.swing.JFrame {
             Connection con = conn.getConexion();
            
          
-            String sql ="select GF_Equipo,GC_Equipo,Puntos_Equipo from equipo where idEquipo='"+id +"'";
+            String sql ="select PJ_Equipo,PG_Equipo,PP_Equipo, PE_Equipo,GF_Equipo,GC_Equipo,Puntos_Equipo from equipo where idEquipo='"+id +"'";
             Statement ps= con.createStatement();
             ResultSet rs = ps.executeQuery(sql);
  
             while(rs.next()){
+               pg2=Integer.parseInt(rs.getString("PG_Equipo"));
+               pp2=Integer.parseInt(rs.getString("PP_Equipo"));
+               pe2=Integer.parseInt(rs.getString("PE_Equipo"));
+               pj2=Integer.parseInt(rs.getString("PJ_Equipo"));
                gf2= Integer.parseInt(rs.getString("GF_Equipo"));
                gc2= Integer.parseInt(rs.getString("GC_Equipo"));
                puntos2= Integer.parseInt(rs.getString("Puntos_Equipo"));
@@ -317,6 +362,18 @@ public class Resultados extends javax.swing.JFrame {
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
+            }
+        });
+
+        txtGoles.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtGolesKeyTyped(evt);
+            }
+        });
+
+        txtGoles2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtGoles2KeyTyped(evt);
             }
         });
 
@@ -489,32 +546,17 @@ public class Resultados extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int gol1 = Integer.parseInt(txtGoles.getText());
-        int gol2= Integer.parseInt(txtGoles2.getText());;
-        if (p1==3 && p2==1){
-            if(gol1>gol2){
-                
-                puntos(Integer.parseInt(txtIdEq1.getText()));
-                System.out.println(gf+""+""+gc+""+puntos+"");
-                int g1=gf+ Integer.parseInt(txtGoles.getText());
-                int g2=gc+ Integer.parseInt(txtGoles2.getText());
-                int pe=puntos+ p1;
-                insertar(g1,g2, pe, Integer.parseInt(txtIdEq1.getText()));
-                
-                puntosEq2(Integer.parseInt(txtIdEq2.getText()));
-                int g3=gf2+ Integer.parseInt(txtGoles.getText());
-                int g4=gc2+ Integer.parseInt(txtGoles2.getText());
-                int pe2=puntos2+ p2;
-                
-                insertarEq2(g3,g4,pe2,Integer.parseInt(txtIdEq2.getText()));
-                limpiar();
-            }else{
-            
-                JOptionPane.showMessageDialog(null, "Los goles del equipo uno deben ser mas");
-            }
+       
         
-        }else if(p1==1 && p2==3){
-            if(gol1<gol2){
+        if( txtGoles.getText().trim().length()==0 || txtGoles2.getText().trim().length()==0){
+                JOptionPane.showMessageDialog(null, "Campos vacios");
+        }else{
+             int gol1 = Integer.parseInt(txtGoles.getText());
+        int gol2= Integer.parseInt(txtGoles2.getText());
+        if(gol1>gol2){
+                 p1=3;
+                 p2=0;
+                
                 puntos(Integer.parseInt(txtIdEq1.getText()));
                 System.out.println(gf+""+""+gc+""+puntos+"");
                 int g1=gf+ Integer.parseInt(txtGoles.getText());
@@ -524,9 +566,103 @@ public class Resultados extends javax.swing.JFrame {
                 puntosEq2(Integer.parseInt(txtIdEq2.getText()));
                 int g3=gf2+ Integer.parseInt(txtGoles.getText());
                 int g4=gc2+ Integer.parseInt(txtGoles2.getText());
-                int pe2=puntos2+ p2;
-                insertar(g1,g2, pe, Integer.parseInt(txtIdEq1.getText()));
-                insertarEq2(g3,g4,pe2,Integer.parseInt(txtIdEq2.getText()));
+                int pen2=puntos2+ p2;
+                
+                pg1=pg1 + 1;
+                pp1=pp1;
+                pe1=pe1;
+                pj1=pj1+1;
+            
+                pg2=pg2;
+                pp2=pp2 + 1;
+                pe2=pe2;
+                pj2=pj2 + 1;
+                
+                insertar(pj1,pg1,pp1,pe1,g1,g2, pe, Integer.parseInt(txtIdEq1.getText()));
+                insertarEq2(pj2,pg2,pp2,pe2,g3,g4,pen2,Integer.parseInt(txtIdEq2.getText()));
+                limpiar();
+            }else if(gol1<gol2) {
+                p1=0;
+                p2=3;
+                puntos(Integer.parseInt(txtIdEq1.getText()));
+                System.out.println(gf+""+""+gc+""+puntos+"");
+                int g1=gf+ Integer.parseInt(txtGoles.getText());
+                int g2=gc+ Integer.parseInt(txtGoles2.getText());
+                int pe=puntos+ p1;
+                
+                puntosEq2(Integer.parseInt(txtIdEq2.getText()));
+                int g3=gf2+ Integer.parseInt(txtGoles.getText());
+                int g4=gc2+ Integer.parseInt(txtGoles2.getText());
+                int pen2=puntos2+ p2;
+                
+                pg1=pg1;
+                pp1=pp1+1;
+                pe1=pe1;
+                pj1=pj1+1;
+
+                pg2=pg2+1;
+                pp2=pp2;
+                pe2=pe2;
+                pj2=pj2 + 1;
+                
+                insertar(pj1,pg1,pp1,pe1,g1,g2, pe, Integer.parseInt(txtIdEq1.getText()));
+                insertarEq2(pj2,pg2,pp2,pe2,g3,g4,pen2,Integer.parseInt(txtIdEq2.getText()));
+                limpiar();
+            }else if(gol1==gol2){
+                p1=1;
+                p2=1;
+                 puntos(Integer.parseInt(txtIdEq1.getText()));
+                System.out.println(gf+""+""+gc+""+puntos+"");
+                int g1=gf+ Integer.parseInt(txtGoles.getText());
+                int g2=gc+ Integer.parseInt(txtGoles2.getText());
+                int pe=puntos+ p1;
+
+                puntosEq2(Integer.parseInt(txtIdEq2.getText()));
+                int g3=gf2+ Integer.parseInt(txtGoles2.getText());
+                int g4=gc2+ Integer.parseInt(txtGoles.getText());
+                int pen2=puntos2+ p2;
+                
+                pg1=pg1;
+                pp1=pp1;
+                pe1=pe1+1;
+                pj1=pj1+1;
+
+                pg2=pg2;
+                pp2=pp2;
+                pe2=pe2+1;
+                pj2=pj2 + 1;
+                
+                insertar(pj1,pg1,pp1,pe1,g1,g2, pe, Integer.parseInt(txtIdEq1.getText()));
+                insertarEq2(pj2,pg2,pp2,pe2,g3,g4,pen2,Integer.parseInt(txtIdEq2.getText()));
+                limpiar();
+        
+            }
+        }
+        /*}else if(p1==1 && p2==3){
+            if(gol1<gol2){
+                puntos(Integer.parseInt(txtIdEq1.getText()));
+                System.out.println(gf+""+""+gc+""+puntos+"");
+                int g1=gf+ Integer.parseInt(txtGoles.getText());
+                int g2=gc+ Integer.parseInt(txtGoles2.getText());
+                int pe=puntos+ p1;
+                
+                puntosEq2(Integer.parseInt(txtIdEq2.getText()));
+                int g3=gf2+ Integer.parseInt(txtGoles.getText());
+                int g4=gc2+ Integer.parseInt(txtGoles2.getText());
+                int pen2=puntos2+ p2;
+                
+                pg1=pg1;
+                pp1=pp1+1;
+                pe1=pe1;
+                pj1=pj1+1;
+
+                pg2=pg2+1;
+                pp2=pp2;
+                pe2=pe2;
+                pj2=pj2 + 1;
+                
+                insertar(pj1,pg1,pp1,pe1,g1,g2, pe, Integer.parseInt(txtIdEq1.getText()));
+                insertarEq2(pj2,pg2,pp2,pe2,g3,g4,pen2,Integer.parseInt(txtIdEq2.getText()));
                 limpiar();
         
             
@@ -545,9 +681,20 @@ public class Resultados extends javax.swing.JFrame {
                 puntosEq2(Integer.parseInt(txtIdEq2.getText()));
                 int g3=gf2+ Integer.parseInt(txtGoles2.getText());
                 int g4=gc2+ Integer.parseInt(txtGoles.getText());
-                int pe2=puntos2+ p2;
-                insertar(g1,g2, pe, Integer.parseInt(txtIdEq1.getText()));
-                insertarEq2(g3,g4,pe2,Integer.parseInt(txtIdEq2.getText()));
+                int pen2=puntos2+ p2;
+                
+                pg1=pg1;
+                pp1=pp1;
+                pe1=pe1+1;
+                pj1=pj1+1;
+
+                pg2=pg2;
+                pp2=pp2;
+                pe2=pe2+1;
+                pj2=pj2 + 1;
+                
+                insertar(pj1,pg1,pp1,pe1,g1,g2, pe, Integer.parseInt(txtIdEq1.getText()));
+                insertarEq2(pj2,pg2,pp2,pe2,g3,g4,pen2,Integer.parseInt(txtIdEq2.getText()));
                 limpiar();
         
             
@@ -555,9 +702,10 @@ public class Resultados extends javax.swing.JFrame {
             
                 JOptionPane.showMessageDialog(null, "Los goles del equipo uno y dos deben ser iguales");
             }
+         */
         
-        }
         
+       
         
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -567,6 +715,24 @@ public class Resultados extends javax.swing.JFrame {
 
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbEquipo1ItemStateChanged
+
+    private void txtGolesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGolesKeyTyped
+
+        char caracter= evt.getKeyChar();
+        if(((caracter < '0') || (caracter > '9') && (caracter != '\b'))){
+            evt.consume();
+        }
+
+// TODO add your handling code here:
+    }//GEN-LAST:event_txtGolesKeyTyped
+
+    private void txtGoles2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGoles2KeyTyped
+char caracter= evt.getKeyChar();
+        if(((caracter < '0') || (caracter > '9') && (caracter != '\b') )){
+            evt.consume();
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtGoles2KeyTyped
 
     /**
      * @param args the command line arguments

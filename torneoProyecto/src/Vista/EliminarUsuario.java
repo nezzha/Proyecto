@@ -24,6 +24,7 @@ public class EliminarUsuario extends javax.swing.JFrame {
     public EliminarUsuario() {
         initComponents();
         llenarFiltro("");
+         Deshabilitar();
     }
     
     public void Deshabilitar(){
@@ -245,7 +246,7 @@ public class EliminarUsuario extends javax.swing.JFrame {
          if(evt.getButton()== 1){
             int fila= jTable1.getSelectedRow();
             try {
-                 Deshabilitar();
+                
                 Conexion conn= new Conexion();
                 Connection con = conn.getConexion();
                 String sql="SELECT * FROM Usuario WHERE idUsuario="+ jTable1.getValueAt(fila, 0);

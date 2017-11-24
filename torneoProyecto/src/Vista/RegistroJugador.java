@@ -167,8 +167,9 @@ public class RegistroJugador extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if(txtNombre.getText().equals("") || txtApellido.getText().equals("") ){
+        if(txtNombre.getText().trim().length()==0 || txtApellido.getText().trim().length()==0 ){
                 JOptionPane.showMessageDialog(null, "Faltan campos por llenar");
+                limpiar();
         }    
         else{
             Conexion conn= new Conexion();

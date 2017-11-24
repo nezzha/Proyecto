@@ -25,9 +25,11 @@ public class EliminarEquipo extends javax.swing.JFrame {
         initComponents();
         
         llenarFiltro("");
+         Deshabilitar();
     }
     public void Deshabilitar(){
         txtNombreEq.setEditable(false);
+        txtTorneo.setEditable(false);
         
     }
     
@@ -233,7 +235,7 @@ public class EliminarEquipo extends javax.swing.JFrame {
         if(evt.getButton()== 1){
             int fila= jTable1.getSelectedRow();
             try {
-                 Deshabilitar();
+                
                 Conexion conn= new Conexion();
                 Connection con = conn.getConexion();
                 String sql="SELECT e.idEquipo, e.nombreEquipo, t.nombreTorneo FROM Equipo e, Torneo t WHERE  t.idTorneo = e.Torneo_IdTorneo AND idEquipo="+ jTable1.getValueAt(fila, 0);

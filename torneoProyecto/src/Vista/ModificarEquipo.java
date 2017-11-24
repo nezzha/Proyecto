@@ -234,6 +234,9 @@ public class ModificarEquipo extends javax.swing.JFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         
+        if(txtNombreEq.getText().trim().length()== 0){
+           JOptionPane.showMessageDialog(null, "campo Equipo vacio");
+        }else{
         try {
             
             Conexion conn= new Conexion();
@@ -256,7 +259,7 @@ public class ModificarEquipo extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Error al modificar el equipo");
             limpiar();
         }
-        
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAceptarActionPerformed
 
