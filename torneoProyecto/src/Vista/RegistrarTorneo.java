@@ -126,14 +126,11 @@ public class RegistrarTorneo extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtNombreTorneoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreTorneoKeyTyped
-
-        char caracter= evt.getKeyChar();
-        if(Character.isDigit(caracter)){
-            
-            getToolkit().beep();
+      /*   char caracter= evt.getKeyChar();
+        if(((caracter >= 'a') || (caracter <= 'z') && (caracter != '\b') && (caracter != ':'))){
             evt.consume();
-            
-        }
+        }*/
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreTorneoKeyTyped
 

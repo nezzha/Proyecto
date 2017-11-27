@@ -176,8 +176,8 @@ public class RegistrarEquipo extends javax.swing.JFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         
-        if(txtNombreEq.getText().trim().length()==0){
-            JOptionPane.showMessageDialog(null, "Nombre de equipo vacio");
+        if(txtNombreEq.getText().trim().length()==0 || cmbTorneo.getItemAt(0)== null){
+            JOptionPane.showMessageDialog(null, "campo vacio");
         }else{
         Conexion conn= new Conexion();
         Connection con = conn.getConexion();

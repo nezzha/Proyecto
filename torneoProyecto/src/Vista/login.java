@@ -15,19 +15,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 /**
  *
  * @author vanessa
  */
 public class login extends javax.swing.JFrame {
-    
+    private int limite=10;
     public Usuario mod;
     public consultaUsuario cons;
     /**
      * Creates new form login
      */
     public login() {
+        
         initComponents();
         this.setTitle("Login");
         this.setLocationRelativeTo(null);
@@ -41,7 +44,7 @@ public class login extends javax.swing.JFrame {
         txtTipo.setText("");
     }
     
-    public void buscarUsuarioLog(String user, String psw) throws SQLException{
+    public boolean buscarUsuarioLog(String user, String psw) throws SQLException{
     
         String tipo="";
         
@@ -59,9 +62,10 @@ public class login extends javax.swing.JFrame {
                 //user.setNombreUsuario(rs.getString("nombreUsuario"));
                 //user.setPassw(rs.getString("passw"));
                tipo=rs.getString("tipoUsuario");
-               
+               return true;
             }
-            if(tipo.equals("administrador")){
+            return false;
+           /* if(tipo.equals("administrador")){
                     
                     MenuPrincipalAdmin menu = new MenuPrincipalAdmin();
                     menu.setVisible(true);
@@ -69,11 +73,11 @@ public class login extends javax.swing.JFrame {
                     menu.txtTipoMenu.setText(tipo);
                   
             }else{
-                 MenuPrincipal menuprin = new MenuPrincipal();
+                    MenuPrincipal menuprin = new MenuPrincipal();
                     menuprin.setVisible(true);
                     this.setVisible(false);
                     menuprin.txtTipoMenu1.setText(tipo);
-            }
+            }*/
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -104,11 +108,23 @@ public class login extends javax.swing.JFrame {
         jLabel3.setText("Password:");
         jLabel3.setToolTipText("");
 
+        txtUser.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtUserKeyTyped(evt);
+            }
+        });
+
         jButton1.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         jButton1.setText("Ingresar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        txtPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPasswordKeyTyped(evt);
             }
         });
 
@@ -136,7 +152,7 @@ public class login extends javax.swing.JFrame {
                             .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(49, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(255, Short.MAX_VALUE)
                 .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -149,11 +165,11 @@ public class login extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -175,8 +191,15 @@ public class login extends javax.swing.JFrame {
 
         }else{
             try{
-                buscarUsuarioLog(usuario, pass);
-            
+                if(buscarUsuarioLog(usuario, pass) == true){
+                    MenuPrincipalAdmin menu = new MenuPrincipalAdmin();
+                    menu.setVisible(true);
+                    this.setVisible(false);
+                    //menu.txtTipoMenu.setText(tipo);                    
+                } else{
+                    JOptionPane.showMessageDialog(null, "Usuario no valido");
+                    limpiar();
+                }           
             }catch(SQLException e){
                  JOptionPane.showMessageDialog(null, e);
             }
@@ -223,6 +246,25 @@ public class login extends javax.swing.JFrame {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtUserKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserKeyTyped
+    if(txtUser.getText().length()== limite){
+        JOptionPane.showMessageDialog(null, "Exedio limite permitido");
+        limpiar();
+        evt.consume();
+        
+    }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUserKeyTyped
+
+    private void txtPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPasswordKeyTyped
+ if(txtPassword.getText().length()== limite){
+     JOptionPane.showMessageDialog(null, "Exedio limite permitido");
+        limpiar();
+        evt.consume();
+    }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPasswordKeyTyped
 
     /**
      * @param args the command line arguments

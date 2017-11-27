@@ -170,7 +170,7 @@ public class Resultados extends javax.swing.JFrame {
             Connection con = conn.getConexion();
            
          
-            String sql ="select PJ_Equipo,PG_Equipo,PP_Equipo, PE_Equipo, GF_Equipo,GC_Equipo,Puntos_Equipo from equipo where idEquipo='"+id +"'";
+            String sql ="select PJ_Equipo,PG_Equipo,PP_Equipo, PE_Equipo, GF_Equipo,GC_Equipo,Puntos_Equipo from Equipo where idEquipo='"+id +"'";
             Statement ps= con.createStatement();
             ResultSet rs = ps.executeQuery(sql);
             String[] fila =  new String[10];
@@ -197,7 +197,7 @@ public class Resultados extends javax.swing.JFrame {
             Connection con = conn.getConexion();
            
          
-            String sql ="select PJ_Equipo,PG_Equipo,PP_Equipo, PE_Equipo,GF_Equipo,GC_Equipo,Puntos_Equipo from equipo where idEquipo='"+id +"'";
+            String sql ="select PJ_Equipo,PG_Equipo,PP_Equipo, PE_Equipo,GF_Equipo,GC_Equipo,Puntos_Equipo from Equipo where idEquipo='"+id +"'";
             Statement ps= con.createStatement();
             ResultSet rs = ps.executeQuery(sql);
  
@@ -240,10 +240,10 @@ public class Resultados extends javax.swing.JFrame {
            
             String[] titulos={"id Partido","Fecha Partido","Nombre de Equipo Uno","Nombre de Equipo Dos","Hora","Nombre de Arbitro"};
             String sql ="select idPartido, fechaPartido, \n" +
-                "(select nombreEquipo from equipo where Equipo_idEquipo1 = idEquipo) as Equipo1, \n" +
-                "(select nombreEquipo from equipo where Equipo_idEquipo2 = idEquipo) as Equipo2,\n" +
-                "horaPartido,nombreArbitro from partido, arbitro\n" +
-                "where arbitro.idArbitro= partido.Arbitro_idArbitro AND fechaPartido = '"+ fecha+"' ";
+                "(select nombreEquipo from Equipo where Equipo_idEquipo1 = idEquipo) as Equipo1, \n" +
+                "(select nombreEquipo from Equipo where Equipo_idEquipo2 = idEquipo) as Equipo2,\n" +
+                "horaPartido,nombreArbitro from Partido, Arbitro\n" +
+                "where Arbitro.idArbitro= Partido.Arbitro_idArbitro AND fechaPartido = '"+ fecha+"' ";
             modelo = new DefaultTableModel(null,titulos);
             Statement ps= con.createStatement();
             ResultSet rs = ps.executeQuery(sql);
@@ -513,12 +513,12 @@ public class Resultados extends javax.swing.JFrame {
                 Connection con = conn.getConexion();
                 //String sql ="SELECT j.idJugador, j.nombreJugador, j.apellidosJugador ,e.nombreEquipo FROM Equipo e, Jugador j WHERE e.idEquipo = j.Equipo_idEquipo AND idJugador="+ jTable1.getValueAt(fila, 0);
                 String sql ="select idPartido, fechaPartido, \n" +
-                    "(select nombreEquipo from equipo where Equipo_idEquipo1 = idEquipo) as Equipo1, \n" +
-                    "(select nombreEquipo from equipo where Equipo_idEquipo2 = idEquipo) as Equipo2,\n" +
-                    "(select idEquipo from equipo where Equipo_idEquipo1 = idEquipo) as id1,\n" +
-                    "(select idEquipo from equipo where Equipo_idEquipo2 = idEquipo) as id2,\n" +
-                    "horaPartido,nombreArbitro from partido, arbitro\n" +
-                    "where arbitro.idArbitro= partido.Arbitro_idArbitro  and fechaPartido = '"+ fecha+"' AND idPartido="+jTable1.getValueAt(fila, 0);
+                    "(select nombreEquipo from Equipo where Equipo_idEquipo1 = idEquipo) as Equipo1, \n" +
+                    "(select nombreEquipo from Equipo where Equipo_idEquipo2 = idEquipo) as Equipo2,\n" +
+                    "(select idEquipo from Equipo where Equipo_idEquipo1 = idEquipo) as id1,\n" +
+                    "(select idEquipo from Equipo where Equipo_idEquipo2 = idEquipo) as id2,\n" +
+                    "horaPartido,nombreArbitro from Partido, Arbitro\n" +
+                    "where Arbitro.idArbitro= Partido.Arbitro_idArbitro  and fechaPartido = '"+ fecha+"' AND idPartido="+jTable1.getValueAt(fila, 0);
                 
                 
                 Statement ps= con.createStatement();
