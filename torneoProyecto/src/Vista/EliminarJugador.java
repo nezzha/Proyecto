@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class EliminarJugador extends javax.swing.JFrame {
      DefaultTableModel modelo;
+     int limite=45;
     /**
      * Creates new form EliminarJugador
      */
@@ -86,7 +87,11 @@ public class EliminarJugador extends javax.swing.JFrame {
         txtEquipo = new javax.swing.JTextField();
         btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int columIndex){
+                return false;
+            }
+        };
         btnRegresar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         txtBusqueda = new javax.swing.JTextField();
@@ -122,6 +127,8 @@ public class EliminarJugador extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.setFocusable(false);
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -141,6 +148,9 @@ public class EliminarJugador extends javax.swing.JFrame {
         txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtBusquedaKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBusquedaKeyTyped(evt);
             }
         });
 
@@ -271,6 +281,15 @@ public class EliminarJugador extends javax.swing.JFrame {
         this.setVisible(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void txtBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyTyped
+        if(txtBusqueda.getText().length()== limite){
+        JOptionPane.showMessageDialog(null, "Excedio limite permitido");
+        limpiar();
+        evt.consume();  
+    }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBusquedaKeyTyped
 
     /**
      * @param args the command line arguments

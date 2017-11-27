@@ -26,6 +26,7 @@ public class RegistrarEquipo extends javax.swing.JFrame {
     /**
      * Creates new form RegistrarEquipo
      */
+    int limite=45;
     public RegistrarEquipo() throws SQLException {
         initComponents();
         //cmbTorneo.addItem("Sleccione Torneo");
@@ -100,6 +101,12 @@ public class RegistrarEquipo extends javax.swing.JFrame {
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegresarActionPerformed(evt);
+            }
+        });
+
+        txtNombreEq.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreEqKeyTyped(evt);
             }
         });
 
@@ -207,6 +214,16 @@ public class RegistrarEquipo extends javax.swing.JFrame {
       }
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    private void txtNombreEqKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreEqKeyTyped
+        if(txtNombreEq.getText().length()== limite){
+        JOptionPane.showMessageDialog(null, "Exedio limite permitido");
+        limpiar();
+        evt.consume();
+        
+    }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreEqKeyTyped
 
     /**
      * @param args the command line arguments

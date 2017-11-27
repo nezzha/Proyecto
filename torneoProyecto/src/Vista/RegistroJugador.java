@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
  * @author Vanessa
  */
 public class RegistroJugador extends javax.swing.JFrame {
-
+    int limite=45;
     /**
      * Creates new form RegistroJugador
      */
@@ -87,6 +87,18 @@ public class RegistroJugador extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         jLabel4.setText("Equipo:");
+
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
+
+        txtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoKeyTyped(evt);
+            }
+        });
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -200,6 +212,26 @@ public class RegistroJugador extends javax.swing.JFrame {
     }
         // TODO add your handling code here:
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        if(txtNombre.getText().length()== limite){
+        JOptionPane.showMessageDialog(null, "Exedio limite permitido");
+        limpiar();
+        evt.consume();
+        
+    }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyTyped
+        if(txtApellido.getText().length()== limite){
+        JOptionPane.showMessageDialog(null, "Exedio limite permitido");
+        limpiar();
+        evt.consume();
+        
+    }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtApellidoKeyTyped
 
     /**
      * @param args the command line arguments

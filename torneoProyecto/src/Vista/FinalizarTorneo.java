@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class FinalizarTorneo extends javax.swing.JFrame {
     DefaultTableModel modelo;
+    int limite=45;
 
     /**
      * Creates new form FinalizarTorneo
@@ -112,7 +113,11 @@ public class FinalizarTorneo extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtNombreTorneo = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int columIndex){
+                return false;
+            }
+        };
         jButton1 = new javax.swing.JButton();
         txtCampeon = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -127,6 +132,12 @@ public class FinalizarTorneo extends javax.swing.JFrame {
 
         jLabel2.setText("Nombre Torneo:");
 
+        txtNombreTorneo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreTorneoKeyTyped(evt);
+            }
+        });
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -138,6 +149,8 @@ public class FinalizarTorneo extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.setFocusable(false);
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -152,6 +165,12 @@ public class FinalizarTorneo extends javax.swing.JFrame {
             }
         });
 
+        txtCampeon.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCampeonKeyTyped(evt);
+            }
+        });
+
         jLabel3.setText("Nombre del Campeon:");
 
         jLabel4.setText("Buscar:");
@@ -159,6 +178,9 @@ public class FinalizarTorneo extends javax.swing.JFrame {
         txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtBusquedaKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBusquedaKeyTyped(evt);
             }
         });
 
@@ -307,6 +329,33 @@ public class FinalizarTorneo extends javax.swing.JFrame {
     }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtNombreTorneoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreTorneoKeyTyped
+        if(txtNombreTorneo.getText().length()== limite){
+        JOptionPane.showMessageDialog(null, "Exedio limite permitido");
+        limpiar();
+        evt.consume();        
+    }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreTorneoKeyTyped
+
+    private void txtCampeonKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCampeonKeyTyped
+        if(txtCampeon.getText().length()== limite){
+        JOptionPane.showMessageDialog(null, "Excedio limite permitido");
+        limpiar();
+        evt.consume();        
+    }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCampeonKeyTyped
+
+    private void txtBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyTyped
+        if(txtBusqueda.getText().length()== limite){
+        JOptionPane.showMessageDialog(null, "Excedio limite permitido");
+        limpiar();
+        evt.consume();        
+        } 
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBusquedaKeyTyped
 
     /**
      * @param args the command line arguments

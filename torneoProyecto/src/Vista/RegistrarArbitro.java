@@ -5,12 +5,14 @@
  */
 package Vista;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Vanessa
  */
 public class RegistrarArbitro extends javax.swing.JFrame {
-
+    int limite=45;
     /**
      * Creates new form RegistrarArbitro
      */
@@ -18,6 +20,10 @@ public class RegistrarArbitro extends javax.swing.JFrame {
         initComponents();
     }
 
+    public void limpiar(){
+    txtNombre.setText("");
+    txtApellidos.setText("");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,6 +44,11 @@ public class RegistrarArbitro extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         txtApellidos.setToolTipText("");
+        txtApellidos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidosKeyTyped(evt);
+            }
+        });
 
         jLabel1.setText("REGISTRO DE ARBITRO");
 
@@ -45,6 +56,12 @@ public class RegistrarArbitro extends javax.swing.JFrame {
         jLabel2.setToolTipText("");
 
         jLabel3.setText("Apellidos:");
+
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
 
         btnRegistrar.setText("Registrar");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -121,6 +138,25 @@ public class RegistrarArbitro extends javax.swing.JFrame {
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        if(txtNombre.getText().length()== limite){
+        JOptionPane.showMessageDialog(null, "Exedio limite permitido");
+        limpiar();
+        evt.consume();
+        
+    }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtApellidosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidosKeyTyped
+        if(txtApellidos.getText().length()== limite){
+        JOptionPane.showMessageDialog(null, "Exedio limite permitido");
+        limpiar();
+        evt.consume();
+    }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtApellidosKeyTyped
 
     /**
      * @param args the command line arguments

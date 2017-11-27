@@ -31,6 +31,7 @@ import javax.swing.table.DefaultTableModel;
 public class ProgramarPartido extends javax.swing.JFrame {
     DateFormat df = DateFormat.getDateInstance();
     DefaultTableModel modelo;
+    int limite=6;
     
     /**
      * Creates new form ProgramarPartido
@@ -389,6 +390,11 @@ public class ProgramarPartido extends javax.swing.JFrame {
         if(((caracter < '0') || (caracter > '9') && (caracter != '\b') && (caracter != ':'))){
             evt.consume();
         }
+        if(txtHora.getText().length()== limite){
+        JOptionPane.showMessageDialog(null, "Excedio limite permitido");
+        limpiar();
+        evt.consume();        
+    }
         // TODO add your handling code here:
     }//GEN-LAST:event_txtHoraKeyTyped
 

@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ModificarEquipo extends javax.swing.JFrame {
      DefaultTableModel modelo;
+     int limite=45;
     /**
      * Creates new form ModificarEquipo
      */
@@ -98,7 +99,11 @@ public class ModificarEquipo extends javax.swing.JFrame {
         btnRegresar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int columIndex){
+                return false;
+            }
+        };
         jLabel4 = new javax.swing.JLabel();
         txtBusqueda = new javax.swing.JTextField();
         txtId = new javax.swing.JTextField();
@@ -108,13 +113,18 @@ public class ModificarEquipo extends javax.swing.JFrame {
 
         jLabel1.setText("MODIFICAR EQUIPO");
 
+        txtNombreEq.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreEqKeyTyped(evt);
+            }
+        });
+
         jLabel2.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         jLabel2.setText("Nombre del Equipo:");
 
         jLabel3.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
         jLabel3.setText("Torneo:");
 
-        btnRegresar.setIcon(new javax.swing.ImageIcon("/home/vanessa/Descargas/flecha-atras-izquierda-de-angulo-de-regresar.png")); // NOI18N
         btnRegresar.setText("Regresar");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -123,7 +133,6 @@ public class ModificarEquipo extends javax.swing.JFrame {
         });
 
         btnAceptar.setFont(new java.awt.Font("Arial Narrow", 0, 14)); // NOI18N
-        btnAceptar.setIcon(new javax.swing.ImageIcon("/home/vanessa/Descargas/actualizar-pagina-opcion.png")); // NOI18N
         btnAceptar.setText("Modificar");
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,6 +151,8 @@ public class ModificarEquipo extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.setFocusable(false);
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -154,6 +165,9 @@ public class ModificarEquipo extends javax.swing.JFrame {
         txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtBusquedaKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBusquedaKeyTyped(evt);
             }
         });
 
@@ -302,6 +316,24 @@ public class ModificarEquipo extends javax.swing.JFrame {
         
         // TODO add your handling code here:
     }//GEN-LAST:event_jTable1MouseClicked
+
+    private void txtNombreEqKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreEqKeyTyped
+        if(txtNombreEq.getText().length()== limite){
+        JOptionPane.showMessageDialog(null, "Exedio limite permitido");
+        limpiar();
+        evt.consume();
+    }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreEqKeyTyped
+
+    private void txtBusquedaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyTyped
+        if(txtBusqueda.getText().length()== limite){
+        JOptionPane.showMessageDialog(null, "Exedio limite permitido");
+        limpiar();
+        evt.consume();
+    }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBusquedaKeyTyped
 
     /**
      * @param args the command line arguments

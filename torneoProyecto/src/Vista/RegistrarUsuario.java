@@ -1,5 +1,7 @@
 package Vista;
 
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,10 +15,15 @@ package Vista;
  * @author Vanessa
  */
 public class RegistrarUsuario extends javax.swing.JFrame {
-
+    int limite=45;
     /** Creates new form RegistrarUsuario */
     public RegistrarUsuario() {
         initComponents();
+    }
+    
+    public void limpiar(){
+    txtPswd.setText("");
+    txtUsuario.setText("");
     }
 
     /** This method is called from within the constructor to
@@ -47,6 +54,12 @@ public class RegistrarUsuario extends javax.swing.JFrame {
         jLabel3.setText("Password:");
 
         jLabel4.setText("Tipo de Usuario:");
+
+        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtUsuarioKeyTyped(evt);
+            }
+        });
 
         cmbTipoUser.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "administrador", "usuario" }));
 
@@ -120,6 +133,15 @@ public class RegistrarUsuario extends javax.swing.JFrame {
         this.setVisible(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
+        if(txtUsuario.getText().length()== limite){
+        JOptionPane.showMessageDialog(null, "Exedio limite permitido");
+        limpiar();
+        evt.consume();
+    }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsuarioKeyTyped
 
     /**
      * @param args the command line arguments

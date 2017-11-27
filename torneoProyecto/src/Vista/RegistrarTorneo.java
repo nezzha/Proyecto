@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  * @author Vanessa
  */
 public class RegistrarTorneo extends javax.swing.JFrame {
-
+    int limite=45;
     /**
      * Creates new form RegistrarTorneo
      */
@@ -126,7 +126,13 @@ public class RegistrarTorneo extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtNombreTorneoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreTorneoKeyTyped
-      /*   char caracter= evt.getKeyChar();
+        if(txtNombreTorneo.getText().length()== limite){
+        JOptionPane.showMessageDialog(null, "Exedio limite permitido");
+        limpiar();
+        evt.consume();
+        
+    }
+        /*   char caracter= evt.getKeyChar();
         if(((caracter >= 'a') || (caracter <= 'z') && (caracter != '\b') && (caracter != ':'))){
             evt.consume();
         }*/
